@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677290319738",
+    "project_id": "spinner-3d-android",
+    "storage_bucket": "spinner-3d-android.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677290319738:android:9d082b62e0934f5e0940c3",
+        "android_client_info": {
+          "package_name": "com.gamesas.spinner3d"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlMn80Brybe9M8SlT5u-xkUwZeam1x4Zc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
