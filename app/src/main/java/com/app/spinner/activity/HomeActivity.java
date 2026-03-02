@@ -32,6 +32,14 @@ public class HomeActivity extends AppCompatActivity {
         binding.homeBtnSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(activity, DrawSpinnerActivity.class);
+                activity.startActivity(intent);
+            }
+        });
+
+        binding.homeBtnCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(activity, ListSpinnerDemoActivity.class);
                 activity.startActivity(intent);
             }

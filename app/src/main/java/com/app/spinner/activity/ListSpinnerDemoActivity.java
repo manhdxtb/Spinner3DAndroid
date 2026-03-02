@@ -49,10 +49,15 @@ public class ListSpinnerDemoActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                String imagePath = imagePaths.get(position);
-                Intent intent = new Intent(activity, SpinnnerViewActivity.class);
-                intent.putExtra("IMAGE_PATH", imagePath);
-                activity.startActivity(intent);
+                if (position == 0) {
+                    Intent intent = new Intent(activity, DrawSpinnerActivity.class);
+                    activity.startActivity(intent);
+                } else {
+                    String imagePath = imagePaths.get(position);
+                    Intent intent = new Intent(activity, SpinnnerViewActivity.class);
+                    intent.putExtra("IMAGE_PATH", imagePath);
+                    activity.startActivity(intent);
+                }
             }
         });
 

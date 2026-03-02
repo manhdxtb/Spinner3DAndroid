@@ -16,25 +16,40 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/spinning_layout"
+            android:layout_width="600dp"
+            android:layout_height="800dp"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/spinning_image_view_down"
+                android:layout_width="600dp"
+                android:layout_height="600dp"
+                android:alpha="0.2" />
+
+            <ImageView
+                android:id="@+id/spinning_image_view_up"
+                android:layout_width="600dp"
+                android:layout_height="600dp"
+                android:layout_alignParentTop="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp">
 
             <ImageView
+                android:id="@+id/btn_back"
                 android:layout_width="55dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/ic_back" />
 
-            <ImageView
-                android:layout_width="55dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:padding="2dp"
-                android:src="@drawable/ic_home" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -56,70 +71,71 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="65dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_speed" />
+
+                <TextView
+                    android:id="@+id/txt_speed_phut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="5dp"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/vong_phut"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
         </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="50dp"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:padding="3dp"
-                android:src="@drawable/ic_speed" />
-
-            <TextView
-                android:id="@+id/txt_speed_phut"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="5dp"
-                android:text="0"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="@string/vong_phut"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/spinning_layout"
-            android:layout_width="600dp"
-            android:layout_height="800dp"
-            android:layout_centerInParent="true">
-
-            <ImageView
-                android:id="@+id/spinning_image_view_down"
-                android:layout_width="600dp"
-                android:layout_height="600dp"
-                android:alpha="0.2" />
-
-            <ImageView
-                android:id="@+id/spinning_image_view_up"
-                android:layout_width="600dp"
-                android:layout_height="600dp"
-                android:layout_alignParentTop="true" />
-
-        </RelativeLayout>
-
-        <View
             android:id="@+id/spinning_move_left_right"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="100dp"
-            android:background="@color/teal_200" />
+            android:layout_marginBottom="100dp">
+
+            <RelativeLayout
+                android:id="@+id/layout_tut"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="200dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/tut_trai_phai" />
+
+                <ImageView
+                    android:id="@+id/tut_hand"
+                    android:layout_width="60dp"
+                    android:layout_height="65dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/tut_hand" />
+            </RelativeLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 

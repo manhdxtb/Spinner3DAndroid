@@ -4,4 +4,14 @@
 
     <string name="vong_phut">vòng / phút</string>
 
+    <string name="clear">Clear</string>
+    <string name="undo">Undo</string>
+    <string name="color">Color</string>
+    <string name="brush">Brush</string>
+    <string name="pattern">Pattern</string>
+
+    <string name="save">Save</string>
+    <string name="save_success">Save Success</string>
+    <string name="spin_now">Spin Now</string>
+
 </resources>

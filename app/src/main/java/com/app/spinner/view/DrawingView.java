@@ -2,6 +2,7 @@ package com.app.spinner.view;
 
 import android.content.Context;
 import android.graphics.*;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -30,8 +31,8 @@ public class DrawingView extends View {
     private float drawableRadius; // Sẽ được tính trong onSizeChanged
 
     // MỚI: Cấu hình loại nét vẽ
-    private int strokeType = 1; // 1: Liền (mặc định), 2: Nét đứt (----), 3: Nét chấm (....), 4: Cầu vồng
-    private float rainbowTileSize = 100f; // Có thể chỉnh số thành 150f, 100f, 50f ...  khoảng cách thay đổi màu cầu vồng khi strokeType = 4
+    private int strokeType = 0; // 0: Liền (mặc định), 1: Nét đứt (----), 2: Nét chấm (....), 3: Cầu vồng
+    private float rainbowTileSize = 100f; // Có thể chỉnh số thành 150f, 100f, 50f ...  khoảng cách thay đổi màu cầu vồng khi strokeType = 3
     private final float[] dashEffectValues = new float[]{30f, 15f}; // [Nét liền, Khoảng trống] cho Type 2
     private final float[] dotEffectValues = new float[]{1f, 25f};   // [Nét liền, Khoảng trống] cho Type 3
 
@@ -105,11 +106,12 @@ public class DrawingView extends View {
         outerPaint.setMaskFilter(new BlurMaskFilter(glowRadius, BlurMaskFilter.Blur.NORMAL));
 
         neonColors = new ArrayList<>();
-        neonColors.add(Color.parseColor("#FF073A"));
-        neonColors.add(Color.parseColor("#39FF14"));
-        neonColors.add(Color.parseColor("#1F51FF"));
-        neonColors.add(Color.parseColor("#FFFF00"));
-        neonColors.add(Color.parseColor("#BC13FE"));
+        setNeonColors(null);
+//        neonColors.add(Color.parseColor("#FF073A"));
+//        neonColors.add(Color.parseColor("#39FF14"));
+//        neonColors.add(Color.parseColor("#1F51FF"));
+//        neonColors.add(Color.parseColor("#FFFF00"));
+//        neonColors.add(Color.parseColor("#BC13FE"));
 
         // MỚI: Khởi tạo màu cầu vồng
         rainbowColors = new int[]{
@@ -123,6 +125,23 @@ public class DrawingView extends View {
 
         // MỚI: Áp dụng kiểu nét vẽ mặc định (Type 1)
         updateInnerPaint();
+    }
+
+    public void setNeonColors(String color) {
+        neonColors.clear();
+        if (TextUtils.isEmpty(color)) {
+            neonColors.add(Color.parseColor("#FE9225"));
+            neonColors.add(Color.parseColor("#FED940"));
+            neonColors.add(Color.parseColor("#78FE11"));
+            neonColors.add(Color.parseColor("#35E8FF"));
+            neonColors.add(Color.parseColor("#005EFE"));
+            neonColors.add(Color.parseColor("#C241FE"));
+            neonColors.add(Color.parseColor("#FE37C6"));
+            neonColors.add(Color.parseColor("#FE1818"));
+            neonColors.add(Color.parseColor("#FFFFFF"));
+        } else {
+            neonColors.add(Color.parseColor(color));
+        }
     }
 
     @Override
@@ -157,8 +176,8 @@ public class DrawingView extends View {
                 Shader.TileMode.REPEAT // LẶP LẠI (Đây là mấu chốt)
         );
 
-        // MỚI: Cập nhật lại paint nếu type hiện tại là 4
-        if (strokeType == 4) {
+        // MỚI: Cập nhật lại paint nếu type hiện tại là 3
+        if (strokeType == 3) {
             updateInnerPaint();
         }
     }
@@ -249,7 +268,6 @@ public class DrawingView extends View {
                 outerPaint.setColor(randomColor);
 
                 // Cấu hình innerPaint (nét vẽ) đã được xử lý bởi setStrokeType()
-
                 undoneStrokes.clear();
 
                 symmetricalPaths = new Path[totalPaths];
@@ -384,17 +402,17 @@ public class DrawingView extends View {
         innerPaint.setStrokeCap(Paint.Cap.ROUND); // Luôn là ROUND
 
         switch (strokeType) {
-            case 1: // Nét liền (mặc định)
+            case 0: // Nét liền (mặc định)
                 // Không cần làm gì thêm, đã reset ở trên
                 break;
-            case 2: // Nét đứt (----)
+            case 1: // Nét đứt (----)
                 innerPaint.setPathEffect(new DashPathEffect(dashEffectValues, 0));
                 break;
-            case 3: // Nét chấm (....)
+            case 2: // Nét chấm (....)
                 // Dùng DashPathEffect với stroke cap ROUND sẽ tạo ra nét chấm
                 innerPaint.setPathEffect(new DashPathEffect(dotEffectValues, 0));
                 break;
-            case 4: // Nét cầu vồng
+            case 3: // Nét cầu vồng
                 if (rainbowShader != null) { // Đảm bảo shader đã được tạo (sau onSizeChanged)
                     innerPaint.setShader(rainbowShader);
                 }
@@ -405,8 +423,8 @@ public class DrawingView extends View {
 
     // MỚI: Hàm công khai để đổi kiểu nét vẽ
     public void setStrokeType(int type) {
-        if (type < 1 || type > 4) {
-            this.strokeType = 1; // Mặc định về 1 nếu giá trị không hợp lệ
+        if (type < 0 || type > 3) {
+            this.strokeType = 0; // Mặc định về 0 nếu giá trị không hợp lệ
         } else {
             this.strokeType = type;
         }

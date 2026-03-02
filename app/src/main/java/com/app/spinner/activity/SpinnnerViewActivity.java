@@ -22,6 +22,16 @@ import com.app.spinner.databinding.ActivitySpinnerViewBinding;
 import com.app.spinner.util.Utils;
 import com.bumptech.glide.Glide;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
 public class SpinnnerViewActivity extends AppCompatActivity {
 
     private SpinnnerViewActivity activity;
@@ -128,9 +138,121 @@ public class SpinnnerViewActivity extends AppCompatActivity {
             addImageToSpinner(imagePath);
         } else {
             finish();
+            return;
         }
 
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
+
         startSpinAnimation();
+        showHandTut();
+        demoGocNghieng();
+    }
+
+    private void showHandTut() {
+        // 1. Tính toán khoảng cách di chuyển (ví dụ: qua trái 60dp, qua phải 60dp)
+        float distancePx = TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
+
+        // 2. Tạo hiệu ứng di chuyển ngang (translationX)
+        // Di chuyển từ -distancePx (trái) đến distancePx (phải)
+        ObjectAnimator animator = ObjectAnimator.ofFloat(binding.tutHand, "translationX", -distancePx, distancePx);
+
+        // Thiết lập thời gian cho 1 lượt (đi từ trái sang phải hết 500ms)
+        animator.setDuration(800);
+
+        // Thiết lập kiểu lặp: REVERSE (đi tới rồi đi lui)
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+
+        // Tính toán số lần lặp để khớp với 3 giây:
+        // 1 lượt = 0.5s -> 3s cần 6 lượt. repeatCount = 5 (vì lượt đầu không tính là lặp)
+        animator.setRepeatCount(4);
+
+        // 3. Lắng nghe sự kiện kết thúc
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                // Tự động ẩn toàn bộ layout hướng dẫn khi xong 3s
+                binding.layoutTut.setVisibility(View.GONE);
+            }
+        });
+
+        // Bắt đầu chạy
+        animator.start();
+    }
+
+    private void demoGocNghieng() {
+        // Tổng thời gian 2s cho 3 giai đoạn: 90->30 (666ms), 30->90 (666ms), 90->50 (668ms)
+        final long durationPerSegment = 666L; // Khoảng 2/3 giây mỗi segment
+
+        // Giai đoạn 1: Từ 90 về 30
+        ValueAnimator animator1 = ValueAnimator.ofFloat(maxPitch, minPitch);
+        animator1.setDuration(durationPerSegment);
+        animator1.setInterpolator(new LinearInterpolator());
+        animator1.addUpdateListener(animation -> {
+            pitch = (float) animation.getAnimatedValue();
+            updatePitchVisuals();
+        });
+
+        // Giai đoạn 2: Từ 30 về 90
+        ValueAnimator animator2 = ValueAnimator.ofFloat(minPitch, maxPitch);
+        animator2.setDuration(durationPerSegment);
+        animator2.setInterpolator(new LinearInterpolator());
+        animator2.addUpdateListener(animation -> {
+            pitch = (float) animation.getAnimatedValue();
+            updatePitchVisuals();
+        });
+
+        // Giai đoạn 3: Từ 90 về 50 (mặc định)
+        ValueAnimator animator3 = ValueAnimator.ofFloat(maxPitch, 50f);
+        animator3.setDuration(2000L - 2 * durationPerSegment); // Phần còn lại để tổng là 2s
+        animator3.setInterpolator(new LinearInterpolator());
+        animator3.addUpdateListener(animation -> {
+            pitch = (float) animation.getAnimatedValue();
+            updatePitchVisuals();
+        });
+
+        // Chain các animator: start animator2 khi animator1 end, start animator3 khi animator2 end
+        animator1.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animator2.start();
+            }
+        });
+        animator2.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                animator3.start();
+            }
+        });
+
+        // Bắt đầu từ animator1, nhưng trước tiên set pitch ban đầu là 90 để demo bắt đầu từ đó
+        pitch = maxPitch;
+        updatePitchVisuals();
+        animator1.start();
+    }
+
+    private void updatePitchVisuals() {
+        float rotationAngle = maxPitch - pitch;
+        spinningImageViewUp.setRotationX(rotationAngle);
+        spinningImageViewDown.setRotationX(-rotationAngle);
+
+        float margin = maxMarginTop * (maxPitch - pitch) / (maxPitch - minPitch);
+        float halfMargin = margin / 2f;
+        float density = getResources().getDisplayMetrics().density;
+
+        RelativeLayout.LayoutParams upParams = (RelativeLayout.LayoutParams) spinningImageViewUp.getLayoutParams();
+        upParams.topMargin = (int) (-halfMargin * density);
+        spinningImageViewUp.setLayoutParams(upParams);
+
+        RelativeLayout.LayoutParams downParams = (RelativeLayout.LayoutParams) spinningImageViewDown.getLayoutParams();
+        downParams.topMargin = (int) (halfMargin * density);
+        spinningImageViewDown.setLayoutParams(downParams);
     }
 
     private void startSpinAnimation() {
