@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">Bahasa</string>
+    <string name="onboarding_continue">Lanjutkan</string>
+    <string name="onboarding_get_started">Mulai</string>
+    <string name="vong_phut">putaran/menit</string>
+    <string name="draw_new">Gambar baru</string>
+    <string name="clear">Hapus</string>
+    <string name="undo">Urungkan</string>
+    <string name="color">Warna</string>
+    <string name="brush">Kuas</string>
+    <string name="pattern">Pola</string>
+    <string name="save">Simpan</string>
+    <string name="save_success">Berhasil disimpan</string>
+    <string name="spin_now">Putar Sekarang</string>
+</resources>

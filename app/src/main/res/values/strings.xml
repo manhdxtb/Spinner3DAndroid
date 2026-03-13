@@ -1,17 +1,17 @@
 <resources>
-    <string name="app_name">Spinner3D</string>
+    <string name="app_name" translatable="false">Spinner Glow 3D</string>
 
-
-    <string name="vong_phut">vòng / phút</string>
-
+    <string name="language">Language</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="vong_phut">rev/min</string>
+    <string name="draw_new">Draw new</string>
     <string name="clear">Clear</string>
     <string name="undo">Undo</string>
     <string name="color">Color</string>
     <string name="brush">Brush</string>
     <string name="pattern">Pattern</string>
-
     <string name="save">Save</string>
     <string name="save_success">Save Success</string>
     <string name="spin_now">Spin Now</string>
-
 </resources>

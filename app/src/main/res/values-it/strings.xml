@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">Lingua</string>
+    <string name="onboarding_continue">Continua</string>
+    <string name="onboarding_get_started">Inizia</string>
+    <string name="vong_phut">giri/min</string>
+    <string name="draw_new">Disegna nuovo</string>
+    <string name="clear">Cancella</string>
+    <string name="undo">Annulla</string>
+    <string name="color">Colore</string>
+    <string name="brush">Pennello</string>
+    <string name="pattern">Motivo</string>
+    <string name="save">Salva</string>
+    <string name="save_success">Salvataggio riuscito</string>
+    <string name="spin_now">Gira ora</string>
+</resources>

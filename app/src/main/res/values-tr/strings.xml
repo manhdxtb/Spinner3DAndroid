@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">Dil</string>
+    <string name="onboarding_continue">Devam Et</string>
+    <string name="onboarding_get_started">Başla</string>
+    <string name="vong_phut">dev/dk</string>
+    <string name="draw_new">Yeni çiz</string>
+    <string name="clear">Temizle</string>
+    <string name="undo">Geri al</string>
+    <string name="color">Renk</string>
+    <string name="brush">Fırça</string>
+    <string name="pattern">Desen</string>
+    <string name="save">Kaydet</string>
+    <string name="save_success">Başarıyla kaydedildi</string>
+    <string name="spin_now">Şimdi döndür</string>
+</resources>

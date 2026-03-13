@@ -1,5 +1,8 @@
 package com.app.spinner.adapter;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
@@ -7,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +50,15 @@ public class AssetImageAdapter extends RecyclerView.Adapter<AssetImageAdapter.Im
                 listener.onItemClick(position);
             }
         });
+
+        try {
+            if (holder.imagePath.contains("s_0.png")) {
+                holder.txtDrawNew.setVisibility(VISIBLE);
+                return;
+            }
+        } catch (Exception e) {
+        }
+        holder.txtDrawNew.setVisibility(GONE);
     }
 
     @Override
@@ -56,10 +69,12 @@ public class AssetImageAdapter extends RecyclerView.Adapter<AssetImageAdapter.Im
     public class ImageViewHolder extends RecyclerView.ViewHolder {
         String imagePath;
         ImageView imageView;
+        TextView txtDrawNew;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.item_grid_spinner_img);
+            txtDrawNew = itemView.findViewById(R.id.item_grid_spinner_txt);
         }
     }
 

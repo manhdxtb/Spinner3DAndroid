@@ -2,11 +2,13 @@ package com.app.spinner.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +20,9 @@ import com.app.spinner.util.OnItemClickListener;
 
 import java.util.ArrayList;
 
-public class ListSpinnerDemoActivity extends AppCompatActivity {
+import app.ads.BaseAdsPopupActivity;
+
+public class ListSpinnerDemoActivity extends BaseAdsPopupActivity {
 
     private ListSpinnerDemoActivity activity;
     private ActivityListSpinnerDemoBinding binding;
@@ -29,18 +33,26 @@ public class ListSpinnerDemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
-        binding = ActivityListSpinnerDemoBinding.inflate((LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+        binding = ActivityListSpinnerDemoBinding.inflate((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
         setContentView(binding.getRoot());
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout, (v, insets) -> {
             androidx.core.graphics.Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
         RecyclerView recyclerView = findViewById(R.id.image_recycler_view);
 
         imagePaths = new ArrayList<>();
-        for (int i = 0; i <= 21; i++) {
+        for (int i = 0; i <= 33; i++) {
             imagePaths.add("file:///android_asset/spinner/s_" + i + ".png");
         }
 
@@ -65,4 +77,9 @@ public class ListSpinnerDemoActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(gridLayoutManager);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showBannerCollapActivity();
+    }
 }

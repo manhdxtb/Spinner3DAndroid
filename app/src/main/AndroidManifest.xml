@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -23,29 +22,8 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
 
-        <!--                Test Admob      -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
-        <meta-data
-            android:name="applovin.sdk.key"
-            android:value="uvDghG0ei6thCFan7x8_WR6GsSgT04T-oryCFOJAb3rHE0IMDsQ9eD_PvtPbHHXkTmA_J_0lq0TRoNNFtTdMzV" />
-        <!---->
-
-        <meta-data
-            android:name="applovin.sdk.mediation_provider"
-            android:value="max" />
-
-        <meta-data
-            android:name="com.google.android.gms.ads.flag.NATIVE_AD_DEBUGGER_ENABLED"
-            android:value="false" />
-
-        <meta-data
-            android:name="com.facebook.sdk.AutoInitEnabled"
-            android:value="true" />
-
         <activity
-            android:name="com.app.spinner.activity.HomeActivity"
+            android:name="com.app.spinner.activity.adslib.SplashActivity"
             android:exported="true"
             android:icon="@drawable/icon_app"
             android:roundIcon="@drawable/icon_app"
@@ -58,6 +36,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.app.spinner.activity.adslib.LanguageActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+
+        <activity
+            android:name="com.app.spinner.activity.adslib.OnboadingView4PageActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+
+        <activity
+            android:name="com.app.spinner.activity.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+
+        <activity
+            android:name="com.app.spinner.activity.ListSpinnerTuVeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity
             android:name="com.app.spinner.activity.ListSpinnerDemoActivity"
@@ -84,7 +86,7 @@
             tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <!--        <activity-->
-        <!--            android:name="com.app.spinner.activity.MainActivity"-->
+        <!--            android:name="com.app.spinner.activity.FullActivity"-->
         <!--            android:exported="true"-->
         <!--            android:screenOrientation="portrait"-->
         <!--            tools:ignore="DiscouragedApi,LockedOrientationActivity" />-->

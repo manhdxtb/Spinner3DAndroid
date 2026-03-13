@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:677290319738:android:9d082b62e0934f5e0940c3",
+        "mobilesdk_app_id": "1:677290319738:android:03051e1dd25ee95a0940c3",
         "android_client_info": {
-          "package_name": "com.gamesas.spinner3d"
+          "package_name": "com.fingerspinner.drawing.glow.art3d"
         }
       },
       "oauth_client": [],

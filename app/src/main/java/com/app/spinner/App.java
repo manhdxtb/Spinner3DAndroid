@@ -1,10 +1,8 @@
 package com.app.spinner;
 
-import android.app.Application;
-
 import com.google.gson.Gson;
 
-public class App extends Application {
+public class App extends app.ads.App {
 
     private static App mSelf;
 

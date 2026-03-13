@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">Idioma</string>
+    <string name="onboarding_continue">Continuar</string>
+    <string name="onboarding_get_started">Começar</string>
+    <string name="vong_phut">rpm</string>
+    <string name="draw_new">Desenhar novo</string>
+    <string name="clear">Limpar</string>
+    <string name="undo">Desfazer</string>
+    <string name="color">Cor</string>
+    <string name="brush">Pincel</string>
+    <string name="pattern">Padrão</string>
+    <string name="save">Salvar</string>
+    <string name="save_success">Salvo com sucesso</string>
+    <string name="spin_now">Girar agora</string>
+</resources>

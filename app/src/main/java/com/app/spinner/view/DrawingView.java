@@ -450,6 +450,10 @@ public class DrawingView extends View {
         return bitmap;
     }
 
+    public boolean isEmptyNetVe() {
+        return strokes.isEmpty();
+    }
+
     public void undo() {
         if (!strokes.isEmpty()) {
             undoneStrokes.add(strokes.remove(strokes.size() - 1));

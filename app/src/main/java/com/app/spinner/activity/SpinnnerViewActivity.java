@@ -2,6 +2,7 @@ package com.app.spinner.activity;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -9,12 +10,15 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
+import app.ads.BaseAdsPopupActivity;
+
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.app.spinner.R;
@@ -32,13 +36,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-public class SpinnnerViewActivity extends AppCompatActivity {
+public class SpinnnerViewActivity extends BaseAdsPopupActivity {
 
     private SpinnnerViewActivity activity;
     private ActivitySpinnerViewBinding binding;
     private boolean isOnScreen;
     private Handler handler;
-    private long timeOnCreate;
+    private long timeOnCreate, timeStartCount;
 
     private RelativeLayout spinningLayout; // Layout chứa hai ImageView cho hình trụ
     private ImageView spinningImageViewUp; // Mặt trên của hình trụ
@@ -48,10 +52,11 @@ public class SpinnnerViewActivity extends AppCompatActivity {
     // --- Biến cho hiệu ứng vật lý (quay) ---
     private ValueAnimator spinnerAnimator; // Animator cho hiệu ứng quay
     private float currentRPM = 0f; // Tốc độ quay hiện tại (vòng/phút)
-    private final float flickStrength = 20f; // Lực vẩy để tăng tốc độ quay
-    private final float smallFlickStrength = 2f; // Lực nhẹ cho di chuyển chậm (nhỏ hơn flickStrength)
-    private final float friction = 5f; // Lực ma sát giảm tốc độ quay
+    private final float flickStrength = 10f; // Lực vẩy để tăng tốc độ quay
+    private final float smallFlickStrength = 1f; // Lực nhẹ cho di chuyển chậm (nhỏ hơn flickStrength)
+    private final float friction = 8f; // Lực ma sát giảm tốc độ quay
     private long lastFrameTime = 0; // Thời gian của frame trước
+    private final float brakeMultiplierHighSpeed = 3.5f; // ← Tăng lực phanh khi > 300 RPM và vuốt ngược (bạn có thể chỉnh 2.5f ~ 5.0f)
 
     // --- Biến cho điều khiển góc nghiêng bằng touch ---
     private float pitch = 40f; // Góc nghiêng ban đầu (50 độ)
@@ -67,17 +72,38 @@ public class SpinnnerViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        handler = new Handler();
+        timeOnCreate = Utils.timeNow();
+        setPopupAdsCallback(new PopupAdsCallback() {
+            @Override
+            public void onAction() {
+                try {
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                startSpinAnimation();
+                                showHandTut();
+                                demoGocNghieng();
+                            } catch (Exception e) {
+                            }
+                        }
+                    }, 500);
+                } catch (Exception e) {
+                }
+            }
+        });
         super.onCreate(savedInstanceState);
         activity = this;
-        binding = ActivitySpinnerViewBinding.inflate((LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+        binding = ActivitySpinnerViewBinding.inflate((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE));
         setContentView(binding.getRoot());
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
         ViewCompat.setOnApplyWindowInsetsListener(binding.rootLayout, (v, insets) -> {
             androidx.core.graphics.Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        handler = new Handler();
-        timeOnCreate = Utils.timeNow();
 
         spinningLayout = findViewById(R.id.spinning_layout);
         spinningImageViewUp = findViewById(R.id.spinning_image_view_up);
@@ -147,10 +173,6 @@ public class SpinnnerViewActivity extends AppCompatActivity {
                 activity.finish();
             }
         });
-
-        startSpinAnimation();
-        showHandTut();
-        demoGocNghieng();
     }
 
     private void showHandTut() {
@@ -376,6 +398,17 @@ public class SpinnnerViewActivity extends AppCompatActivity {
             startSpinAnimation();
         }
         // Áp dụng lực (có thể dương hoặc âm). Nếu amount ngược dấu với currentRPM, sẽ làm chậm đi.
+        // ====================== PHANH NHANH HƠN KHI > 300 RPM ======================
+        // Chỉ áp dụng khi vuốt NGƯỢC chiều quay và tốc độ cao
+        if (currentRPM != 0f
+                && Math.signum(amount) == -Math.signum(currentRPM)
+                && Math.abs(currentRPM) > 300f) {
+
+            amount *= brakeMultiplierHighSpeed;   // Phanh mạnh gấp 3 lần
+        }
+        // =============================================================================
+
+        // Áp dụng lực (giữ nguyên logic cũ)
         currentRPM += amount;
     }
 
@@ -394,8 +427,13 @@ public class SpinnnerViewActivity extends AppCompatActivity {
             try {
                 binding.txtSpeedPhut.setText("" + Math.abs((int) currentRPM));
 
-                long dentaTime = (Utils.timeNow() - timeOnCreate) / 1000;
-                binding.txtTimePlay.setText(Utils.formatTimeMMSS(dentaTime));
+                if (currentRPM != 0 && timeStartCount == 0) {
+                    timeStartCount = Utils.timeNow();
+                }
+                if (timeStartCount > 0) {
+                    long dentaTime = (Utils.timeNow() - timeStartCount) / 1000;
+                    binding.txtTimePlay.setText(Utils.formatTimeMMSS(dentaTime));
+                }
             } catch (Exception e) {
             }
 
@@ -410,6 +448,8 @@ public class SpinnnerViewActivity extends AppCompatActivity {
         super.onResume();
         activity = this;
         isOnScreen = true;
+
+        showBannerCollapActivity();
 
         handler.postDelayed(runnableUpdateText, 1000);
     }

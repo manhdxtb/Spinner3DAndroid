@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">Ngôn ngữ</string>
+    <string name="onboarding_continue">Tiếp tục</string>
+    <string name="onboarding_get_started">Bắt đầu</string>
+    <string name="vong_phut">vòng/phút</string>
+    <string name="draw_new">Vẽ mới</string>
+    <string name="clear">Xóa</string>
+    <string name="undo">Hoàn tác</string>
+    <string name="color">Màu</string>
+    <string name="brush">Cọ</string>
+    <string name="pattern">Mẫu</string>
+    <string name="save">Lưu</string>
+    <string name="save_success">Lưu thành công</string>
+    <string name="spin_now">Quay ngay</string>
+</resources>

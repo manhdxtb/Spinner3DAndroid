@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">ภาษา</string>
+    <string name="onboarding_continue">ดำเนินการต่อ</string>
+    <string name="onboarding_get_started">เริ่มต้น</string>
+    <string name="vong_phut">รอบ/นาที</string>
+    <string name="draw_new">วาดใหม่</string>
+    <string name="clear">ล้าง</string>
+    <string name="undo">เลิกทำ</string>
+    <string name="color">สี</string>
+    <string name="brush">แปรง</string>
+    <string name="pattern">ลวดลาย</string>
+    <string name="save">บันทึก</string>
+    <string name="save_success">บันทึกสำเร็จ</string>
+    <string name="spin_now">หมุนตอนนี้</string>
+</resources>

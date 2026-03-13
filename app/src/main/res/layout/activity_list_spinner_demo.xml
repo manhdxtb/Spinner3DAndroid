@@ -15,12 +15,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <RelativeLayout
+            android:id="@+id/rootAdBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:paddingTop="2dp"
+            android:paddingBottom="1dp" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/image_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@id/rootAdBanner"
             android:clipToPadding="false"
             android:padding="4dp" />
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/ic_circle_black_50"
+            android:padding="10dp"
+            android:src="@drawable/ic_back" />
 
     </RelativeLayout>
 </RelativeLayout>

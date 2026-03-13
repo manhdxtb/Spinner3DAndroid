@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">Bahasa</string>
+    <string name="onboarding_continue">Teruskan</string>
+    <string name="onboarding_get_started">Mulakan</string>
+    <string name="vong_phut">pusingan/minit</string>
+    <string name="draw_new">Lukis baru</string>
+    <string name="clear">Padam</string>
+    <string name="undo">Batal</string>
+    <string name="color">Warna</string>
+    <string name="brush">Berus</string>
+    <string name="pattern">Corak</string>
+    <string name="save">Simpan</string>
+    <string name="save_success">Berjaya disimpan</string>
+    <string name="spin_now">Putar sekarang</string>
+</resources>

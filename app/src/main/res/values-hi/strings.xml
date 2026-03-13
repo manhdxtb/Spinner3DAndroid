@@ -1,0 +1,15 @@
+<resources>
+    <string name="language">भाषा</string>
+    <string name="onboarding_continue">जारी रखें</string>
+    <string name="onboarding_get_started">शुरू करें</string>
+    <string name="vong_phut">rev/मिनट</string>
+    <string name="draw_new">नया ड्रा करें</string>
+    <string name="clear">साफ करें</string>
+    <string name="undo">पूर्ववत करें</string>
+    <string name="color">रंग</string>
+    <string name="brush">ब्रश</string>
+    <string name="pattern">पैटर्न</string>
+    <string name="save">सहेजें</string>
+    <string name="save_success">सफलतापूर्वक सहेजा गया</string>
+    <string name="spin_now">अब स्पिन करें</string>
+</resources>
