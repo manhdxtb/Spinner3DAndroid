@@ -75,7 +75,7 @@ public class ListSpinnerTuVeActivity extends BaseAdsPopupActivity {
                     activity.startActivity(intent);
                 } else {
                     String imagePath = imagePaths.get(position);
-                    Intent intent = new Intent(activity, SpinnnerViewActivity.class);
+                    Intent intent = new Intent(activity, ViewImageSpinnerActivity.class);
                     intent.putExtra("IMAGE_PATH", imagePath);
                     activity.startActivity(intent);
                 }

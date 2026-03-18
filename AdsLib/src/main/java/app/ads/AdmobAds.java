@@ -27,7 +27,7 @@ import java.util.List;
 
 public class AdmobAds {
 
-    public final static boolean IS_TEST = true;
+    public final static boolean IS_TEST = false;
 
     // Key Test Admob
     public static String key_admob_banner = "ca-app-pub-3940256099942544/9214589741";
@@ -81,21 +81,21 @@ public class AdmobAds {
             return;
         }
 
-        if (App.self().getPackageName().equals("com.sas.holyquran.tasbih.prayer")) {
-            key_admob_banner = "ca-app-pub-6274285024608859/3579502259";
-            key_admob_banner_collap = "ca-app-pub-6274285024608859/8234236595";
-            key_admob_native = "ca-app-pub-6274285024608859/2457992273";
-            key_admob_popup = "ca-app-pub-6274285024608859/1623422750";
-            key_admob_video_reward = "";
+        if (App.self().getPackageName().equals("com.fingerspinner.drawing.glow.art3d")) {
+            key_admob_banner = "ca-app-pub-6274285024608859/3474797103";
+            key_admob_banner_collap = "ca-app-pub-6274285024608859/8870460561";
+            key_admob_native = "ca-app-pub-6274285024608859/7326412200";
+            key_admob_popup = "ca-app-pub-6274285024608859/1183542230";
+            key_admob_video_reward = "ca-app-pub-6274285024608859/7557378893";
 
-            key_admob_popup_resume = "ca-app-pub-6274285024608859/9510885169";
-            key_admob_popup_openapp = "ca-app-pub-6274285024608859/5105510379";
-            key_admob_native_splash = "ca-app-pub-6274285024608859/5763211843";
-            key_admob_native_language = "ca-app-pub-6274285024608859/9655129475";
-            key_admob_native_language_2 = "ca-app-pub-6274285024608859/5998955496";
-            key_admob_native_preview_small = "ca-app-pub-6274285024608859/4450130175";
-            key_admob_native_preview_full = "ca-app-pub-6274285024608859/3137048502";
-            key_admob_native_overlay = "ca-app-pub-6274285024608859/3792428704";
+            key_admob_popup_resume = "ca-app-pub-6274285024608859/4620224364";
+            key_admob_popup_openapp = "ca-app-pub-6274285024608859/7414042114";
+            key_admob_native_splash = "ca-app-pub-6274285024608859/9872551043";
+            key_admob_native_language = "ca-app-pub-6274285024608859/8163883556";
+            key_admob_native_language_2 = "ca-app-pub-6274285024608859/6100960442";
+            key_admob_native_preview_small = "ca-app-pub-6274285024608859/5933306036";
+            key_admob_native_preview_full = "ca-app-pub-6274285024608859/9735985525";
+            key_admob_native_overlay = "ca-app-pub-6274285024608859/4787878774";
         }
     }
 

@@ -52,7 +52,7 @@ public class ListSpinnerDemoActivity extends BaseAdsPopupActivity {
         RecyclerView recyclerView = findViewById(R.id.image_recycler_view);
 
         imagePaths = new ArrayList<>();
-        for (int i = 0; i <= 33; i++) {
+        for (int i = 0; i <= 39; i++) {
             imagePaths.add("file:///android_asset/spinner/s_" + i + ".png");
         }
 
@@ -66,7 +66,7 @@ public class ListSpinnerDemoActivity extends BaseAdsPopupActivity {
                     activity.startActivity(intent);
                 } else {
                     String imagePath = imagePaths.get(position);
-                    Intent intent = new Intent(activity, SpinnnerViewActivity.class);
+                    Intent intent = new Intent(activity, ViewImageSpinnerActivity.class);
                     intent.putExtra("IMAGE_PATH", imagePath);
                     activity.startActivity(intent);
                 }
