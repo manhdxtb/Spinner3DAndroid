@@ -22,8 +22,10 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
 
+
+        <!--        android:name="com.app.spinner.activity.adslib.SplashActivity"-->
         <activity
-            android:name="com.app.spinner.activity.adslib.SplashActivity"
+            android:name="com.app.spinner.activity.battle.CustomSpinnerActivity"
             android:exported="true"
             android:icon="@drawable/icon_app"
             android:roundIcon="@drawable/icon_app"
@@ -87,6 +89,30 @@
 
         <activity
             android:name="com.app.spinner.activity.DrawSpinnerActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+
+        <!--        <activity-->
+        <!--            android:name="com.app.spinner.activity.battle.CustomSpinnerActivity"-->
+        <!--            android:exported="true"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            tools:ignore="DiscouragedApi,LockedOrientationActivity" />-->
+
+        <activity
+            android:name="com.app.spinner.activity.battle.SpinTogetherActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+
+        <activity
+            android:name="com.app.spinner.activity.battle.SpinShowdownActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
+
+        <activity
+            android:name="com.app.spinner.activity.battle.BattleResultActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="DiscouragedApi,LockedOrientationActivity" />

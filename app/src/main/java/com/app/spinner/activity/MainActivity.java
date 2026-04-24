@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -50,7 +51,7 @@ public class MainActivity extends BaseAdsPopupActivity {
         PopupNetworkAds.setupPopupAds(this);
         NativeAdmobAds.loadNativeAd(this, 4);
 
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
         new Thread() {
             @Override
             public void run() {

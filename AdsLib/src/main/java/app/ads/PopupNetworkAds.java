@@ -9,7 +9,7 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 public class PopupNetworkAds {
 
-    public static boolean IS_PRO = false;
+    public static boolean IS_PRO = true;
 
     private static final String KEY_TIME_LOAD_OPEN_APP_ADS = "TimeLoadOpenAppAds";
     private static final String KEY_TIME_LOAD_POPUP_ADS = "TimeLoadPopupAds";
