@@ -38,10 +38,10 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
 
     private final Random random = new Random();
     private final Handler emojiHandler = new Handler(Looper.getMainLooper());
-    
+
+    // Expanded emoji list
     private final List<String> possibleEmojis = Arrays.asList(
-            "😡", "😔", "😎", "🧱", "😆", "😂", "😱", "😤", 
-            "🤬", "❤️", "🖕", "😏", "😁", "💩", "🔥", "⚡️"
+            "❤️", "😎", "😂", "🤬", "🖕", "😏", "💩", "😁", "😆", "😱", "😤", "😡", "🔥", "⚡️"
     );
 
     @Override
@@ -50,14 +50,14 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
         binding = ActivitySpinShowdownBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        shapeYou = getIntent().getStringExtra("shape");
-        colorYou = getIntent().getIntExtra("color", Color.WHITE);
-        
-        shapeP2 = getIntent().getStringExtra("shapeP2");
-        colorP2 = getIntent().getIntExtra("colorP2", Color.WHITE);
-        
-        initialRpmYou = getIntent().getFloatExtra("rpmYou", 0);
-        initialRpmP2 = getIntent().getFloatExtra("rpmP2", 0);
+        shapeYou = BattleData.shapeYou;
+        colorYou = BattleData.colorYou;
+
+        shapeP2 = BattleData.shapeP2;
+        colorP2 = BattleData.colorP2;
+
+        initialRpmYou = BattleData.rpmYou;
+        initialRpmP2 = BattleData.rpmP2;
 
         initBattle();
         setupEmojiControls();
@@ -105,17 +105,19 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
             binding.battleView.init(bYou, bP2, colorYou, colorP2, initialRpmYou, initialRpmP2, new BattleView.OnBattleListener() {
                 @Override
                 public void onCollision(float speedYou, float speedP2) {
-                    runOnUiThread(() -> updateProgress(speedYou, speedP2));
+                    runOnUiThread(() -> {
+                        updateProgress(speedYou, speedP2);
+                        showNativeAdsActivity();
+                    });
                 }
 
                 @Override
                 public void onGameOver(boolean youWin) {
                     runOnUiThread(() -> {
+                        BattleData.youWin = youWin;
+                        BattleData.finalSpeed = youWin ? initialRpmYou : initialRpmP2;
+                        
                         Intent intent = new Intent(SpinShowdownActivity.this, BattleResultActivity.class);
-                        intent.putExtra("youWin", youWin);
-                        intent.putExtra("finalSpeed", youWin ? initialRpmYou : initialRpmP2);
-                        intent.putExtra("shape", shapeYou);
-                        intent.putExtra("color", colorYou);
                         startActivity(intent);
                         finish();
                     });
@@ -167,13 +169,21 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
         }
 
         @Override
-        public int getItemCount() { return emojis.size(); }
+        public int getItemCount() {
+            return emojis.size();
+        }
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             TextView tvEmoji;
-            ViewHolder(View v) { super(v); tvEmoji = v.findViewById(R.id.tvEmoji); }
+
+            ViewHolder(View v) {
+                super(v);
+                tvEmoji = v.findViewById(R.id.tvEmoji);
+            }
         }
     }
 
-    interface OnEmojiClickListener { void onEmojiClick(String emoji); }
+    interface OnEmojiClickListener {
+        void onEmojiClick(String emoji);
+    }
 }

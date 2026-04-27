@@ -9,7 +9,7 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 public class PopupNetworkAds {
 
-    public static boolean IS_PRO = true;
+    public static boolean IS_PRO = false;
 
     private static final String KEY_TIME_LOAD_OPEN_APP_ADS = "TimeLoadOpenAppAds";
     private static final String KEY_TIME_LOAD_POPUP_ADS = "TimeLoadPopupAds";
@@ -58,16 +58,16 @@ public class PopupNetworkAds {
             return false;
         }
 
-        int offset = RemoteConfig.remote_ads_offset_openapp;
-        long timeLoadOpenAds = SharedAdsGlobalUtil.getLongValue(context, KEY_TIME_LOAD_OPEN_APP_ADS);
-        long timeNow = System.currentTimeMillis();
-        if (timeNow - timeLoadOpenAds > 1000L * offset) {
-            return true;
-        }
-        return false;
-
-
+//        int offset = RemoteConfig.remote_ads_offset_openapp;
+//        long timeLoadOpenAds = SharedAdsGlobalUtil.getLongValue(context, KEY_TIME_LOAD_OPEN_APP_ADS);
+//        long timeNow = System.currentTimeMillis();
+//        if (timeNow - timeLoadOpenAds > 1000L * offset) {
+//            return true;
+//        }
 //        return false;
+
+
+        return false;
 
     }
 
@@ -76,20 +76,20 @@ public class PopupNetworkAds {
             return false;
         }
 
-        // Mặc định backTimePreload = 0
-        // backTimePreload = 10 là còn 10 giây nữa là đạt điều kiện
-        int backTimePreload = 0;
-        int offset = RemoteConfig.remote_ads_interval;
-        long timeLoadOpenAds = SharedAdsGlobalUtil.getLongValue(context, KEY_TIME_LOAD_POPUP_ADS);
-        long timeNow = System.currentTimeMillis();
-        if ((timeNow - timeLoadOpenAds) > 1000L * (offset - backTimePreload) &&
-                (timeNow - time_start_app_ads) > 1000L * RemoteConfig.remote_time_start_show_popup) {
-            return true;
-        }
-        return false;
-
-
+//        // Mặc định backTimePreload = 0
+//        // backTimePreload = 10 là còn 10 giây nữa là đạt điều kiện
+//        int backTimePreload = 0;
+//        int offset = RemoteConfig.remote_ads_interval;
+//        long timeLoadOpenAds = SharedAdsGlobalUtil.getLongValue(context, KEY_TIME_LOAD_POPUP_ADS);
+//        long timeNow = System.currentTimeMillis();
+//        if ((timeNow - timeLoadOpenAds) > 1000L * (offset - backTimePreload) &&
+//                (timeNow - time_start_app_ads) > 1000L * RemoteConfig.remote_time_start_show_popup) {
+//            return true;
+//        }
 //        return false;
+
+
+        return false;
     }
 
     public static boolean checkConditionLoadPopupAds(Context context) {

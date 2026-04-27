@@ -14,6 +14,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.app.spinner.App;
+import com.app.spinner.activity.battle.CustomSpinnerActivity;
 import com.app.spinner.databinding.ActivityHomeBinding;
 
 import app.ads.AdmobAds;
@@ -93,6 +94,14 @@ public class MainActivity extends BaseAdsPopupActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, ListSpinnerDemoActivity.class);
+                activity.startActivity(intent);
+            }
+        });
+
+        binding.homeBtnBattle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, CustomSpinnerActivity.class);
                 activity.startActivity(intent);
             }
         });

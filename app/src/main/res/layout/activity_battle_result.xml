@@ -65,16 +65,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Spinner Display -->
-        <ImageView
-            android:id="@+id/ivFinalSpinner"
+        <!-- 3D Spinner Display -->
+        <RelativeLayout
+            android:id="@+id/spinning_layout_final"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvResultStatus"
-            tools:src="@drawable/homt_ic_btn_spinner" />
+            app:layout_constraintTop_toBottomOf="@+id/tvResultStatus">
+
+            <ImageView
+                android:id="@+id/spinning_image_view_down_final"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:alpha="0.2" />
+
+            <ImageView
+                android:id="@+id/spinning_image_view_up_final"
+                android:layout_width="250dp"
+                android:layout_height="250dp" />
+        </RelativeLayout>
 
         <!-- Stats Card -->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,7 +98,7 @@
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivFinalSpinner">
+            app:layout_constraintTop_toBottomOf="@+id/spinning_layout_final">
 
             <ImageView
                 android:id="@+id/ivUserIcon"

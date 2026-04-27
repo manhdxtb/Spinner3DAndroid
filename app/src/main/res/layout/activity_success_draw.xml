@@ -61,14 +61,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:adjustViewBounds="true"
-                android:padding="30dp" />
+                android:adjustViewBounds="true" />
 
             <TextView
                 android:id="@+id/btn_spin_now"
                 android:layout_width="230dp"
-                android:layout_height="60dp"
-                android:layout_alignParentBottom="true"
+                android:layout_height="55dp"
+                android:layout_above="@id/btn_battle_now"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/ic_btn_save"
@@ -77,6 +76,22 @@
                 android:text="@string/spin_now"
                 android:textColor="@color/white"
                 android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn_battle_now"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/ic_btn_battle"
+                android:gravity="center"
+                android:paddingBottom="3dp"
+                android:text="@string/battle_now"
+                android:textColor="@color/white"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
         </RelativeLayout>

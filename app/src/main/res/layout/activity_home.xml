@@ -42,19 +42,26 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/home_btn_battle"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:src="@drawable/homt_ic_btn_battle" />
 
             <ImageView
                 android:id="@+id/home_btn_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/homt_ic_btn_spinner" />
 
             <ImageView
                 android:id="@+id/home_btn_collection"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="130dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/homt_ic_btn_collection" />
         </LinearLayout>

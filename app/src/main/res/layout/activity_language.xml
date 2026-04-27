@@ -71,7 +71,7 @@
                     android:paddingHorizontal="20dp"
                     android:paddingTop="6dp"
                     android:paddingBottom="7dp"
-                    android:text="@string/tt_done"
+                    android:text="@string/done"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"

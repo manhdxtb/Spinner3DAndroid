@@ -2,6 +2,7 @@ package com.app.spinner.activity;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.app.spinner.R;
+import com.app.spinner.activity.battle.SpinTogetherActivity;
 import com.app.spinner.databinding.ActivitySpinnerViewBinding;
 import com.app.spinner.util.Utils;
 import com.bumptech.glide.Glide;
@@ -44,6 +46,7 @@ public class SpinnnerViewActivity extends BaseAdsPopupActivity {
     private Handler handler;
     private long timeOnCreate, timeStartCount;
 
+    private View btnBattle;
     private RelativeLayout spinningLayout; // Layout chứa hai ImageView cho hình trụ
     private ImageView spinningImageViewUp; // Mặt trên của hình trụ
     private ImageView spinningImageViewDown; // Mặt dưới của hình trụ
@@ -167,6 +170,16 @@ public class SpinnnerViewActivity extends BaseAdsPopupActivity {
             return;
         }
 
+        btnBattle = findViewById(R.id.btn_battle_now);
+        btnBattle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, SpinTogetherActivity.class);
+                intent.putExtra("shape", imagePath);
+                intent.putExtra("color", Color.parseColor("#FFFFFF"));
+                startActivity(intent);
+            }
+        });
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -433,6 +446,9 @@ public class SpinnnerViewActivity extends BaseAdsPopupActivity {
                 if (timeStartCount > 0) {
                     long dentaTime = (Utils.timeNow() - timeStartCount) / 1000;
                     binding.txtTimePlay.setText(Utils.formatTimeMMSS(dentaTime));
+                    if (dentaTime > 10 && btnBattle.getVisibility() == View.GONE) {
+                        btnBattle.setVisibility(View.VISIBLE);
+                    }
                 }
             } catch (Exception e) {
             }

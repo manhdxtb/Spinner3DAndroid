@@ -27,7 +27,7 @@ import java.util.List;
 
 public class AdmobAds {
 
-    public final static boolean IS_TEST = false;
+    public final static boolean IS_TEST = true;
 
     // Key Test Admob
     public static String key_admob_banner = "ca-app-pub-3940256099942544/9214589741";

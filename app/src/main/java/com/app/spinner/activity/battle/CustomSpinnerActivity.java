@@ -102,9 +102,11 @@ public class CustomSpinnerActivity extends BaseAdsPopupActivity {
 
         binding.btnReady.setOnClickListener(v -> {
             String finalPath = allSpinnerPaths.get(selectedTypeIndex).get(selectedColorIndex);
+            
+            BattleData.shapeYou = finalPath;
+            BattleData.colorYou = Color.parseColor(hexColors[selectedColorIndex]);
+            
             Intent intent = new Intent(this, SpinTogetherActivity.class);
-            intent.putExtra("shape", finalPath);
-            intent.putExtra("color", Color.parseColor(hexColors[selectedColorIndex]));
             startActivity(intent);
         });
 

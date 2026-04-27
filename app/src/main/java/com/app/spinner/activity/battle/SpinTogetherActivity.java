@@ -10,9 +10,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.spinner.R;
 import com.app.spinner.databinding.ActivitySpinTogetherBinding;
 import com.bumptech.glide.Glide;
 
@@ -34,7 +36,7 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
     private float lastTouchX;
     private boolean isSpinning = false;
     private final float friction = 0.98f;
-    private final float swipePowerMultiplier = 1.0f; // Increased for x2 speed
+    private final float swipePowerMultiplier = 1.0f; 
     
     private String shapeYou;
     private int colorYou;
@@ -46,6 +48,7 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
     private float targetRpmP2;
     
     private boolean isTimerStarted = false;
+    private boolean isCountdownEffectRunning = false;
     private ObjectAnimator handAnimator;
 
     private final String[] hexColors = {
@@ -59,10 +62,9 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
         binding = ActivitySpinTogetherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        shapeYou = getIntent().getStringExtra("shape");
-        colorYou = getIntent().getIntExtra("color", 0xFFFFFFFF);
+        shapeYou = BattleData.shapeYou;
+        colorYou = BattleData.colorYou;
 
-        // Random target RPM for P2 between 1000 and 1500
         targetRpmP2 = 1000 + random.nextInt(501);
 
         setupSpinners();
@@ -80,13 +82,11 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
     }
 
     private void setupSpinners() {
-        // Load User Spinner (No Tint)
         if (shapeYou != null) {
-            Glide.with(this).load(shapeYou).into(binding.ivSpinnerYou);
-            binding.ivSpinnerYou.clearColorFilter();
+            Glide.with(this).load(shapeYou).into(binding.spinningImageViewUpYou);
+            Glide.with(this).load(shapeYou).into(binding.spinningImageViewDownYou);
         }
 
-        // Random Player 2 Spinner (No Tint)
         int typeIdx = 1 + random.nextInt(6);
         int colorIdx = 1 + random.nextInt(10);
         shapeP2 = "file:///android_asset/battle/spiner" + typeIdx + "/" + colorIdx + ".png";
@@ -94,6 +94,26 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
         
         Glide.with(this).load(shapeP2).into(binding.ivSpinnerP2);
         binding.ivSpinnerP2.clearColorFilter();
+
+        float density = getResources().getDisplayMetrics().density;
+        float cameraDistance = 8000 * density;
+        binding.spinningImageViewUpYou.setCameraDistance(cameraDistance);
+        binding.spinningImageViewDownYou.setCameraDistance(cameraDistance);
+        
+        float rotationAngle = 50f;
+        binding.spinningImageViewUpYou.setRotationX(rotationAngle);
+        binding.spinningImageViewDownYou.setRotationX(-rotationAngle);
+
+        float marginDp = 62.5f;
+        float halfMarginPx = (marginDp / 2f) * density;
+
+        android.widget.RelativeLayout.LayoutParams upParams = (android.widget.RelativeLayout.LayoutParams) binding.spinningImageViewUpYou.getLayoutParams();
+        upParams.topMargin = (int) (-halfMarginPx);
+        binding.spinningImageViewUpYou.setLayoutParams(upParams);
+
+        android.widget.RelativeLayout.LayoutParams downParams = (android.widget.RelativeLayout.LayoutParams) binding.spinningImageViewDownYou.getLayoutParams();
+        downParams.topMargin = (int) (halfMarginPx);
+        binding.spinningImageViewDownYou.setLayoutParams(downParams);
     }
 
     private void startHandAnimation() {
@@ -116,34 +136,59 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
         isTimerStarted = true;
         stopHandAnimation();
         
-        // Countdown from 5s
         new CountDownTimer(5000, 100) {
             public void onTick(long millisUntilFinished) {
                 binding.tvTimer.setText((millisUntilFinished / 1000) + "s");
-                
-                // P2 Speed increases up to random target
                 float progress = 1.0f - (millisUntilFinished / 5000f);
                 currentSpeedP2 = progress * targetRpmP2;
-                binding.tvSpeedP2.setText(String.valueOf((int)currentSpeedP2));
+//                binding.tvSpeedP2.setText(String.valueOf((int)currentSpeedP2));
+                binding.tvSpeedP2.setText("...");
             }
 
             public void onFinish() {
                 binding.tvTimer.setText("0s");
                 isSpinning = false;
-                
-                Intent intent = new Intent(SpinTogetherActivity.this, SpinShowdownActivity.class);
-                intent.putExtra("shape", shapeYou);
-                intent.putExtra("color", colorYou);
-                
-                intent.putExtra("shapeP2", shapeP2);
-                intent.putExtra("colorP2", colorP2);
-
-                intent.putExtra("rpmYou", currentSpeedYou);
-                intent.putExtra("rpmP2", currentSpeedP2);
-                startActivity(intent);
-                finish();
+                isCountdownEffectRunning = true; 
+                showLetGoAnimation();
             }
         }.start();
+    }
+
+    private void showLetGoAnimation() {
+        binding.viewDim.setVisibility(View.VISIBLE);
+        binding.ivCountdownEffect.setVisibility(View.VISIBLE);
+        int[] drawables = {R.drawable.ic_let_go_3, R.drawable.ic_let_go_2, R.drawable.ic_let_go_1, R.drawable.ic_let_go_fight};
+        
+        Handler handler = new Handler(Looper.getMainLooper());
+        for (int i = 0; i < drawables.length; i++) {
+            final int index = i;
+            handler.postDelayed(() -> {
+                binding.ivCountdownEffect.setImageResource(drawables[index]);
+                binding.ivCountdownEffect.setScaleX(0.2f);
+                binding.ivCountdownEffect.setScaleY(0.2f);
+                
+                if (drawables[index] == R.drawable.ic_let_go_fight) {
+                    binding.ivCountdownEffect.animate().scaleX(1.0f).scaleY(1.0f).setDuration(600).start();
+                } else {
+                    binding.ivCountdownEffect.animate().scaleX(0.7f).scaleY(0.7f).setDuration(600).start();
+                }
+                
+                if (index == drawables.length - 1) {
+                    handler.postDelayed(this::goToLoading, 1200);
+                }
+            }, i * 1200);
+        }
+    }
+
+    private void goToLoading() {
+        BattleData.shapeP2 = shapeP2;
+        BattleData.colorP2 = colorP2;
+        BattleData.rpmYou = currentSpeedYou;
+        BattleData.rpmP2 = currentSpeedP2;
+        
+        Intent intent = new Intent(this, BattleLoadingAdsActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void startRotationLoop() {
@@ -158,18 +203,16 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
             float deltaTime = (currentTime - lastFrameTime) / 1000f;
             lastFrameTime = currentTime;
 
-            // Update You
             angleYou += currentSpeedYou * deltaTime * 6;
-            binding.ivSpinnerYou.setRotation(angleYou);
+            binding.spinningImageViewUpYou.setRotation(angleYou);
+            binding.spinningImageViewDownYou.setRotation(angleYou);
             
-            // Friction for You
-            if (!isSpinning) {
+            if (!isSpinning && !isCountdownEffectRunning) {
                 currentSpeedYou *= friction;
                 if (currentSpeedYou < 1) currentSpeedYou = 0;
             }
             binding.tvSpeedYou.setText(String.valueOf((int)currentSpeedYou));
 
-            // Update P2
             angleP2 += currentSpeedP2 * deltaTime * 6;
             binding.ivSpinnerP2.setRotation(angleP2);
 
@@ -179,6 +222,7 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
 
     private void setupInput() {
         binding.cardYou.setOnTouchListener((v, event) -> {
+            if (isCountdownEffectRunning) return false;
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     lastTouchX = event.getX();
@@ -186,9 +230,8 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
                     return true;
                 case MotionEvent.ACTION_MOVE:
                     float dx = event.getX() - lastTouchX;
-                    if (dx > 0) { // Swipe right
+                    if (dx > 0) {
                         if (!isTimerStarted) startCountdown();
-                        // Multiply speed boost to make it easier to reach high RPM
                         currentSpeedYou += dx * swipePowerMultiplier;
                         if (currentSpeedYou > 2000) currentSpeedYou = 2000;
                     }

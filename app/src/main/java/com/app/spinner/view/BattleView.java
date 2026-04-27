@@ -37,8 +37,8 @@ public class BattleView extends View {
     private float x2, y2, vx2, vy2;
     private float logicRpm1, logicRpm2;
     private float visualAngle1, visualAngle2;
+    private float visualRpm1, visualRpm2; // Dynamic visual rotation speeds
     private final float radius = 175;   // size spinner to nhỏ
-    private final float VISUAL_RPM = 300f;  // vòng quay mặc định
     
     private static final float NORMAL_SPEED = 20f;  // tốc độ di chuyển
     private static final float MAGNETIC_FORCE = 0.8f; 
@@ -90,6 +90,10 @@ public class BattleView extends View {
         this.battleStartTime = System.currentTimeMillis();
         this.lastEmojiChangeTime = 0;
         this.lastConfettiBurstTime = 0;
+
+        // Initialize random visual RPMs between 300 and 600
+        this.visualRpm1 = 300 + random.nextInt(301);
+        this.visualRpm2 = 300 + random.nextInt(301);
         
         fragments.clear();
         sparks.clear();
@@ -194,8 +198,9 @@ public class BattleView extends View {
     }
 
     private void updatePhysics(float dt) {
-        visualAngle1 += VISUAL_RPM * dt * 6;
-        visualAngle2 += VISUAL_RPM * dt * 6;
+        // Visual rotation using dynamic RPMs
+        visualAngle1 += visualRpm1 * dt * 6;
+        visualAngle2 += visualRpm2 * dt * 6;
 
         if (isWaitingToStart) return;
 
@@ -289,6 +294,10 @@ public class BattleView extends View {
         normalizeVelocity(false);
         logicRpm1 = Math.max(0, logicRpm1 - rpmReduction);
         logicRpm2 = Math.max(0, logicRpm2 - rpmReduction);
+
+        // Randomize visual RPMs upon collision (300 - 600 range)
+        visualRpm1 = 300 + random.nextInt(301);
+        visualRpm2 = 300 + random.nextInt(301);
         
         float cx = (x1 + x2) / 2f;
         float cy = (y1 + y2) / 2f;
