@@ -144,8 +144,6 @@ public class SpinTogetherActivity extends BaseAdsPopupActivity {
         showNativeAdsActivity();
         stopHandAnimation();
 
-        Toast.makeText(activity, activity.getString(R.string.let_spinner_fast), Toast.LENGTH_LONG).show();
-
         new CountDownTimer(5000, 100) {
             public void onTick(long millisUntilFinished) {
                 binding.tvTimer.setText((millisUntilFinished / 1000) + "s");
