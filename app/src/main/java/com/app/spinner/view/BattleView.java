@@ -20,8 +20,12 @@ public class BattleView extends View {
 
     public interface OnBattleListener {
         void onCollision(float speedYou, float speedP2);
+
         void onGameOver(boolean youWin);
+
         void onUpdateP2Emoji(String emoji);
+
+        void onBanPhaoHoa();
     }
 
     private OnBattleListener listener;
@@ -30,7 +34,7 @@ public class BattleView extends View {
     private final Paint emojiPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint debrisPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint confettiPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    
+
     private Bitmap spinnerYou, spinnerP2;
     private int colorYou, colorP2;
     private float x1, y1, vx1, vy1;
@@ -39,9 +43,9 @@ public class BattleView extends View {
     private float visualAngle1, visualAngle2;
     private float visualRpm1, visualRpm2; // Dynamic visual rotation speeds
     private final float radius = 175;   // size spinner to nhỏ
-    
+
     private static final float NORMAL_SPEED = 20f;  // tốc độ di chuyển
-    private static final float MAGNETIC_FORCE = 0.8f; 
+    private static final float MAGNETIC_FORCE = 0.8f;
     private static final float MIN_DISTANCE_FOR_ATTRACTION = 350f;
 
     private float rpmReduction = 10;    // giảm bao nhiêu 1 lần lúc va chạm (càng thấp time trận đấu càng lâu)
@@ -60,7 +64,7 @@ public class BattleView extends View {
     private long lastEmojiChangeTime;
     private long lastConfettiBurstTime;
     private final String[] p2Emojis = {"😱", "😤", "😜", "😏", "🔥", "⚡️", "😵", "🤡"};
-    
+
     private final Path clipPath = new Path();
     private final RectF viewRect = new RectF();
 
@@ -94,12 +98,12 @@ public class BattleView extends View {
         // Initialize random visual RPMs between 300 and 600
         this.visualRpm1 = 300 + random.nextInt(301);
         this.visualRpm2 = 300 + random.nextInt(301);
-        
+
         fragments.clear();
         sparks.clear();
         emojis.clear();
         confettiList.clear();
-        
+
         lastTime = System.currentTimeMillis();
         setupStartingPositions();
         invalidate();
@@ -112,7 +116,7 @@ public class BattleView extends View {
             setupStartingPositions();
             viewRect.set(0, 0, w, h);
             clipPath.reset();
-            clipPath.addRoundRect(viewRect, 45, 45, Path.Direction.CW); 
+            clipPath.addRoundRect(viewRect, 45, 45, Path.Direction.CW);
         }
     }
 
@@ -122,8 +126,10 @@ public class BattleView extends View {
         y2 = radius + 20;
         x1 = getWidth() / 2f + (random.nextFloat() - 0.5f) * 200;
         y1 = getHeight() - radius - 20;
-        vx1 = 0; vy1 = 0;
-        vx2 = 0; vy2 = 0;
+        vx1 = 0;
+        vy1 = 0;
+        vx2 = 0;
+        vy2 = 0;
     }
 
     public void spawnEmoji(String emoji, boolean fromYou) {
@@ -182,7 +188,7 @@ public class BattleView extends View {
         if (spinnerP2 != null) drawSpinner(canvas, spinnerP2, x2, y2, visualAngle2);
         drawSparks(canvas, dt);
         drawEmojis(canvas, dt);
-        
+
         canvas.restore();
         invalidate();
     }
@@ -205,15 +211,19 @@ public class BattleView extends View {
         if (isWaitingToStart) return;
 
         if (isGameOver) {
-            float gameOverFriction = 0.995f; 
+            float gameOverFriction = 0.995f;
             if (spinnerYou != null) {
-                vx1 *= gameOverFriction; vy1 *= gameOverFriction;
-                x1 += vx1; y1 += vy1;
+                vx1 *= gameOverFriction;
+                vy1 *= gameOverFriction;
+                x1 += vx1;
+                y1 += vy1;
                 handleWallCollision(true);
             }
             if (spinnerP2 != null) {
-                vx2 *= gameOverFriction; vy2 *= gameOverFriction;
-                x2 += vx2; y2 += vy2;
+                vx2 *= gameOverFriction;
+                vy2 *= gameOverFriction;
+                x2 += vx2;
+                y2 += vy2;
                 handleWallCollision(false);
             }
             return;
@@ -223,24 +233,28 @@ public class BattleView extends View {
             float dx = x2 - x1;
             float dy = y2 - y1;
             float dist = (float) Math.sqrt(dx * dx + dy * dy);
-            
+
             if (dist > MIN_DISTANCE_FOR_ATTRACTION) {
                 float ax = (dx / dist) * MAGNETIC_FORCE;
                 float ay = (dy / dist) * MAGNETIC_FORCE;
-                vx1 += ax; vy1 += ay;
-                vx2 -= ax; vy2 -= ay;
+                vx1 += ax;
+                vy1 += ay;
+                vx2 -= ax;
+                vy2 -= ay;
             }
-            
+
             normalizeVelocity(true);
             normalizeVelocity(false);
         }
 
         if (spinnerYou != null) {
-            x1 += vx1; y1 += vy1;
+            x1 += vx1;
+            y1 += vy1;
             handleWallCollision(true);
         }
         if (spinnerP2 != null) {
-            x2 += vx2; y2 += vy2;
+            x2 += vx2;
+            y2 += vy2;
             handleWallCollision(false);
         }
 
@@ -274,7 +288,7 @@ public class BattleView extends View {
         float v1n = vx1 * nx + vy1 * ny;
         float v2n = vx2 * nx + vy2 * ny;
         float overlap = radius * 1.6f - dist;
-        x1 += nx * (overlap / 2f + 5); 
+        x1 += nx * (overlap / 2f + 5);
         y1 += ny * (overlap / 2f + 5);
         x2 -= nx * (overlap / 2f + 5);
         y2 -= ny * (overlap / 2f + 5);
@@ -285,7 +299,7 @@ public class BattleView extends View {
         vy1 = vy1 - (temp - v1n) * ny;
         vx2 = vx2 - (v2n - temp) * nx;
         vy2 = vy2 - (v2n - temp) * ny;
-        float kick = 15f; 
+        float kick = 15f;
         vx1 += nx * kick;
         vy1 += ny * kick;
         vx2 -= nx * kick;
@@ -298,7 +312,7 @@ public class BattleView extends View {
         // Randomize visual RPMs upon collision (300 - 600 range)
         visualRpm1 = 300 + random.nextInt(301);
         visualRpm2 = 300 + random.nextInt(301);
-        
+
         float cx = (x1 + x2) / 2f;
         float cy = (y1 + y2) / 2f;
         for (int i = 0; i < 40; i++) sparks.add(new Spark(cx, cy, random));
@@ -309,7 +323,10 @@ public class BattleView extends View {
                 isGameOver = true;
                 youWinBattle = logicRpm1 > 0;
                 shatterSpinner(!youWinBattle);
-                postDelayed(() -> celebrationStarted = true, 5000);
+                postDelayed(() -> {
+                    celebrationStarted = true;
+                    if (listener != null) listener.onBanPhaoHoa();
+                }, 5000);
                 postDelayed(() -> {
                     if (listener != null) listener.onGameOver(youWinBattle);
                 }, 10000);
@@ -322,10 +339,15 @@ public class BattleView extends View {
         float vy = isYou ? vy1 : vy2;
         float currentSpeed = (float) Math.sqrt(vx * vx + vy * vy);
         if (currentSpeed > 0) {
-            float targetSpeed = NORMAL_SPEED; 
+            float targetSpeed = NORMAL_SPEED;
             float factor = targetSpeed / currentSpeed;
-            if (isYou) { vx1 *= factor; vy1 *= factor; }
-            else { vx2 *= factor; vy2 *= factor; }
+            if (isYou) {
+                vx1 *= factor;
+                vy1 *= factor;
+            } else {
+                vx2 *= factor;
+                vy2 *= factor;
+            }
         }
     }
 
@@ -347,10 +369,10 @@ public class BattleView extends View {
         float sx = isYou ? x1 : x2;
         float sy = isYou ? y1 : y2;
         int shatterColor = isYou ? colorYou : colorP2;
-        for (int i = 0; i < 15; i++) { 
+        for (int i = 0; i < 15; i++) {
             fragments.add(new GlassShard(sx, sy, shatterColor, random));
         }
-        
+
         if (isYou) spinnerYou = null;
         else spinnerP2 = null;
     }
@@ -414,16 +436,20 @@ public class BattleView extends View {
     private static class Spark {
         float x, y, vx, vy, life;
         int color;
+
         Spark(float x, float y, Random r) {
-            this.x = x; this.y = y;
+            this.x = x;
+            this.y = y;
             this.vx = (r.nextFloat() - 0.5f) * 1500;
             this.vy = (r.nextFloat() - 0.5f) * 1500;
             this.life = 0.7f; // Increased life
             // Single blended Red-Yellow (Orange-ish) color
             this.color = Color.rgb(255, 100 + r.nextInt(100), 0);
         }
+
         void update(float dt) {
-            x += vx * dt; y += vy * dt;
+            x += vx * dt;
+            y += vy * dt;
             life -= dt * 3.0f; // Slower decay
         }
     }
@@ -432,14 +458,16 @@ public class BattleView extends View {
         float x, y, vx, vy, life, angle, vAngle;
         int color;
         Path triPath;
+
         Confetti(float sx, float sy, Random r, boolean fromBottom) {
-            this.x = sx; this.y = sy;
+            this.x = sx;
+            this.y = sy;
             if (fromBottom) {
-                this.vx = -400 - r.nextFloat() * 1200; 
-                this.vy = -400 - r.nextFloat() * 1200; 
+                this.vx = -400 - r.nextFloat() * 1200;
+                this.vy = -400 - r.nextFloat() * 1200;
             } else {
-                this.vx = 400 + r.nextFloat() * 1200; 
-                this.vy = 400 + r.nextFloat() * 1200; 
+                this.vx = 400 + r.nextFloat() * 1200;
+                this.vy = 400 + r.nextFloat() * 1200;
             }
             this.life = 2.0f;
             this.angle = r.nextFloat() * 360;
@@ -453,10 +481,12 @@ public class BattleView extends View {
             triPath.lineTo(-size, size);
             triPath.close();
         }
+
         void update(float dt) {
-            x += vx * dt; y += vy * dt;
+            x += vx * dt;
+            y += vy * dt;
             angle += vAngle * dt;
-            life -= dt * 1.5f; 
+            life -= dt * 1.5f;
         }
     }
 
@@ -468,7 +498,8 @@ public class BattleView extends View {
         boolean settled = false;
 
         GlassShard(float sx, float sy, int color, Random r) {
-            this.x = sx; this.y = sy;
+            this.x = sx;
+            this.y = sy;
             this.color = color;
             this.life = 4.0f;
             this.angle = r.nextFloat() * 360;
@@ -477,11 +508,11 @@ public class BattleView extends View {
             float dist = 100 + r.nextFloat() * 300;
             this.targetX = sx + (float) (Math.cos(scatterAngle) * dist);
             this.targetY = sy + (float) (Math.sin(scatterAngle) * dist);
-            this.vx = (targetX - sx) * 5; 
+            this.vx = (targetX - sx) * 5;
             this.vy = (targetY - sy) * 5;
-            
+
             shardPath = new Path();
-            int numPoints = 3 + r.nextInt(5); 
+            int numPoints = 3 + r.nextInt(5);
             float s = 60 + r.nextFloat() * 50; // Smaller shards
             for (int j = 0; j < numPoints; j++) {
                 float pointAngle = (float) (j * (2 * Math.PI / numPoints) + (r.nextFloat() - 0.5f) * 0.5);
@@ -499,13 +530,18 @@ public class BattleView extends View {
                 life -= dt * 0.02f;
                 return;
             }
-            x += vx * dt; y += vy * dt;
+            x += vx * dt;
+            y += vy * dt;
             angle += vAngle * dt;
-            vx *= 0.90f; vy *= 0.90f; vAngle *= 0.90f;
+            vx *= 0.90f;
+            vy *= 0.90f;
+            vAngle *= 0.90f;
             life -= dt * 0.2f;
             if (Math.abs(vx) < 3 && Math.abs(vy) < 3) {
                 settled = true;
-                vx = 0; vy = 0; vAngle = 0;
+                vx = 0;
+                vy = 0;
+                vAngle = 0;
             }
         }
     }
@@ -513,11 +549,13 @@ public class BattleView extends View {
     private static class FloatingEmoji {
         String text;
         float x, y, vx, vy, life;
+
         FloatingEmoji(String text, float x, float y, boolean fromYou, Random r) {
             this.text = text;
-            this.x = x; this.y = y;
+            this.x = x;
+            this.y = y;
             if (fromYou) {
-                this.vx = -100 - r.nextFloat() * 400; 
+                this.vx = -100 - r.nextFloat() * 400;
                 this.vy = -100 - r.nextFloat() * 400;
             } else {
                 this.vx = 100 + r.nextFloat() * 400;
@@ -525,8 +563,10 @@ public class BattleView extends View {
             }
             this.life = 1.5f;
         }
+
         void update(float dt) {
-            x += vx * dt; y += vy * dt;
+            x += vx * dt;
+            y += vy * dt;
             life -= dt * 0.8f;
         }
     }

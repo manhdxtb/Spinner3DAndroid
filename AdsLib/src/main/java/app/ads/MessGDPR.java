@@ -3,24 +3,24 @@ package app.ads;
 import android.app.Activity;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.google.android.ump.ConsentDebugSettings;
-import com.google.android.ump.ConsentForm;
 import com.google.android.ump.ConsentInformation;
 import com.google.android.ump.ConsentRequestParameters;
-import com.google.android.ump.FormError;
 import com.google.android.ump.UserMessagingPlatform;
 
+/**
+ * Lớp xử lý GDPR theo chuẩn Google UMP SDK mới nhất.
+ */
 public class MessGDPR {
 
     public interface MessGDPRListener {
-        public void onDone(boolean canRequestAds);
+        void onDone(boolean canRequestAds);
 
-        public void onError();
+        void onError();
     }
 
     private static MessGDPR messGDPR;
+    private ConsentInformation consentInformation;
 
     public static MessGDPR getInstance() {
         if (messGDPR == null) {
@@ -29,114 +29,77 @@ public class MessGDPR {
         return messGDPR;
     }
 
-    private Activity activity;
-    private ConsentInformation consentInformation;
-    private ConsentForm consentForm;
-    private MessGDPRListener messGDPRListener;
-
-    public void resetMess() {
-        if (consentInformation != null) {
-            consentInformation.reset();
+    /**
+     * Reset trạng thái đồng thuận (chủ yếu dùng để test).
+     */
+    public void resetMess(Activity activity) {
+        if (consentInformation == null) {
+            consentInformation = UserMessagingPlatform.getConsentInformation(activity);
         }
+        consentInformation.reset();
     }
 
+    /**
+     * Khởi tạo và hiển thị Form đồng thuận GDPR tại Splash Screen.
+     */
     public void onCreate(Activity activity, MessGDPRListener listener) {
-        this.activity = activity;
-        this.messGDPRListener = listener;
         ConsentDebugSettings debugSettings = new ConsentDebugSettings.Builder(activity)
                 .setDebugGeography(ConsentDebugSettings.DebugGeography.DEBUG_GEOGRAPHY_EEA)
-                .addTestDeviceHashedId("9BCC85DE600BAA005B804C60F5867FBD")
+                .addTestDeviceHashedId("B97A04AA8B5F250AFA63BF41A73093DA")
                 .build();
-        ConsentRequestParameters params = new ConsentRequestParameters
-                .Builder()
-//                .setConsentDebugSettings(debugSettings)
+
+        ConsentRequestParameters params = new ConsentRequestParameters.Builder()
+//                .setConsentDebugSettings(debugSettings) // Comment dòng này khi release
+                .setTagForUnderAgeOfConsent(false)
                 .build();
 
         consentInformation = UserMessagingPlatform.getConsentInformation(activity);
-        if (consentInformation.canRequestAds()) {
-            try {
-                messGDPRListener.onDone(true);
-                messGDPRListener = null;
-            } catch (Exception e) {
-            }
-        } else {
-            consentInformation.requestConsentInfoUpdate(
-                    activity,
-                    params,
-                    new ConsentInformation.OnConsentInfoUpdateSuccessListener() {
-                        @Override
-                        public void onConsentInfoUpdateSuccess() {
-                            // The consent information state was updated.
-                            // You are now ready to check if a form is available.
-                            if (consentInformation.isConsentFormAvailable()) {
-                                loadForm();
-                            } else {
-                                if (consentInformation.canRequestAds() && messGDPRListener != null) {
-                                    messGDPRListener.onDone(true);
-                                    messGDPRListener = null;
+
+        // Google khuyến nghị luôn gọi requestConsentInfoUpdate khi khởi động ứng dụng
+        consentInformation.requestConsentInfoUpdate(
+                activity,
+                params,
+                () -> {
+                    // Kiểm tra và hiển thị form nếu cần thiết
+                    UserMessagingPlatform.loadAndShowConsentFormIfRequired(
+                            activity,
+                            formError -> {
+                                if (formError != null) {
+                                    Log.e("GDPR", "onConsentFormDismissed Error: " + formError.getMessage());
+                                }
+                                // Bất kể thành công hay lỗi form, gọi onDone để tiếp tục vào App
+                                if (listener != null) {
+                                    listener.onDone(consentInformation.canRequestAds());
                                 }
                             }
-                        }
-                    },
-                    new ConsentInformation.OnConsentInfoUpdateFailureListener() {
-                        @Override
-                        public void onConsentInfoUpdateFailure(FormError formError) {
-                            // Handle the error.
-                            Log.e("XXX Admob", "onConsentInfoUpdateFailure    " + formError.getMessage());
-                            if (messGDPRListener != null) {
-                                messGDPRListener.onError();
-                            }
-                        }
-                    });
-        }
-    }
-
-    private void loadForm() {
-        // Loads a consent form. Must be called on the main thread.
-        UserMessagingPlatform.loadConsentForm(
-                activity,
-                new UserMessagingPlatform.OnConsentFormLoadSuccessListener() {
-                    @Override
-                    public void onConsentFormLoadSuccess(ConsentForm consentForm) {
-                        MessGDPR.this.consentForm = consentForm;
-                        if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.REQUIRED) {
-                            MessGDPR.this.consentForm.show(
-                                    activity,
-                                    new ConsentForm.OnConsentFormDismissedListener() {
-                                        @Override
-                                        public void onConsentFormDismissed(@Nullable FormError formError) {
-                                            if (consentInformation.getConsentStatus() == ConsentInformation.ConsentStatus.OBTAINED) {
-                                                // App can start requesting ads.
-                                            }
-
-                                            if (consentInformation.canRequestAds() && messGDPRListener != null) {
-                                                messGDPRListener.onDone(true);
-                                                messGDPRListener = null;
-                                            }
-
-                                            // Handle dismissal by reloading form.
-                                            loadForm();
-                                        }
-                                    });
-                        } else {
-                            if (consentInformation.canRequestAds() && messGDPRListener != null) {
-                                messGDPRListener.onDone(true);
-                                messGDPRListener = null;
-                            }
-                        }
-                    }
+                    );
                 },
-                new UserMessagingPlatform.OnConsentFormLoadFailureListener() {
-                    @Override
-                    public void onConsentFormLoadFailure(FormError formError) {
-                        // Handle Error.
-                        Log.e("XXX Admob", "onConsentFormLoadFailure  " + formError.getMessage());
-                        if (messGDPRListener != null) {
-                            messGDPRListener.onError();
-                        }
+                formError -> {
+                    Log.e("GDPR", "onConsentInfoUpdateFailure: " + formError.getMessage());
+                    if (listener != null) {
+                        listener.onError();
                     }
-                }
-        );
+                });
     }
 
+    /**
+     * Kiểm tra xem có cần hiển thị nút "Quyền riêng tư" (Privacy Options) trong Settings không.
+     */
+    public boolean isPrivacyOptionsRequired() {
+        return consentInformation != null &&
+                consentInformation.getPrivacyOptionsRequirementStatus() == ConsentInformation.PrivacyOptionsRequirementStatus.REQUIRED;
+    }
+
+    /**
+     * Hiển thị lại form thay đổi tùy chọn đồng thuận (dùng trong màn hình Settings).
+     */
+    public void showPrivacyForm(Activity activity, MessGDPRListener listener) {
+        UserMessagingPlatform.showPrivacyOptionsForm(activity, formError -> {
+            if (formError != null) {
+                if (listener != null) listener.onError();
+            } else {
+                if (listener != null) listener.onDone(consentInformation.canRequestAds());
+            }
+        });
+    }
 }

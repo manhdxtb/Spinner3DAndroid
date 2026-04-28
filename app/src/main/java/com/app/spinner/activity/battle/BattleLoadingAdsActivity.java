@@ -15,32 +15,49 @@ import com.bumptech.glide.Glide;
 import java.util.Random;
 
 import app.ads.BaseAdsPopupActivity;
+import app.ads.NativeAdmobAds;
 
 public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
 
     private ActivityBattleLoadingAdsBinding binding;
     private final Random random = new Random();
-    
+
     private String shapeYou, shapeP2;
     private int colorYou, colorP2;
     private float rpmYou, rpmP2;
-    
-    private float currentVisualRpmUser = 200f;
-    private float currentVisualRpmP2 = 200f;
+
+    private float currentVisualRpmUser = 30f;
+    private float currentVisualRpmP2 = 30f;
     private float targetVisualRpmUser;
     private float targetVisualRpmP2;
-    
+
     private float angleUser = 0f;
     private float angleP2 = 0f;
-    
+
     private long lastFrameTime = 0;
     private final Handler rotationHandler = new Handler(Looper.getMainLooper());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Delay 6s then go to Showdown
+        setPopupAdsCallback(new PopupAdsCallback() {
+            @Override
+            public void onAction() {
+                rotationHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        BattleLoadingAdsActivity.this.startRunProcess();
+                        BattleLoadingAdsActivity.this.startRotationLoop();
+                    }
+                });
+            }
+        });
+
         binding = ActivityBattleLoadingAdsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        NativeAdmobAds.loadNativeAd(this, 2);
 
         shapeYou = BattleData.shapeYou;
         colorYou = BattleData.colorYou;
@@ -50,14 +67,10 @@ public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
         rpmP2 = BattleData.rpmP2;
 
         // Targets: 400 - 600
-        targetVisualRpmUser = 400 + random.nextInt(201);
-        targetVisualRpmP2 = 400 + random.nextInt(201);
+        targetVisualRpmUser = 300 + random.nextInt(301);
+        targetVisualRpmP2 = 300 + random.nextInt(301);
 
         setup3DSpinners();
-        startRotationLoop();
-
-        // Delay 6s then go to Showdown
-        new Handler(Looper.getMainLooper()).postDelayed(this::goToShowdown, 6000);
     }
 
     private void setup3DSpinners() {
@@ -105,6 +118,28 @@ public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
         rotationHandler.post(rotationRunnable);
     }
 
+    private void startRunProcess() {
+        ValueAnimator animator = ValueAnimator.ofInt(0, 100);
+        animator.setDuration(4000); // 4 seconds
+        animator.setInterpolator(new LinearInterpolator());
+        animator.addUpdateListener(animation -> {
+            int progress = (int) animation.getAnimatedValue();
+            binding.progressBar.setProgress(progress);
+        });
+        animator.addListener(new android.animation.AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(android.animation.Animator animation) {
+                rotationHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        BattleLoadingAdsActivity.this.goToShowdown();
+                    }
+                }, 1000);
+            }
+        });
+        animator.start();
+    }
+
     private final Runnable rotationRunnable = new Runnable() {
         @Override
         public void run() {
@@ -116,7 +151,7 @@ public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
             // 6 seconds duration
             float rampStepUser = (targetVisualRpmUser - 10f) / 6f * deltaTime;
             float rampStepP2 = (targetVisualRpmP2 - 10f) / 6f * deltaTime;
-            
+
             currentVisualRpmUser = Math.min(targetVisualRpmUser, currentVisualRpmUser + rampStepUser);
             currentVisualRpmP2 = Math.min(targetVisualRpmP2, currentVisualRpmP2 + rampStepP2);
 
@@ -134,9 +169,12 @@ public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
     };
 
     private void goToShowdown() {
+        // Stop background rotation loop
+        rotationHandler.removeCallbacks(rotationRunnable);
+
         Intent intent = new Intent(this, SpinShowdownActivity.class);
         startActivity(intent);
-        finish();
+        activity.finish();
     }
 
     @Override

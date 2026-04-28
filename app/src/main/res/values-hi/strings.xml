@@ -1,8 +1,9 @@
 <resources>
+    <string name="done">हो गया</string>
     <string name="language">भाषा</string>
     <string name="onboarding_continue">जारी रखें</string>
     <string name="onboarding_get_started">शुरू करें</string>
-    <string name="vong_phut">rev/मिनट</string>
+    <string name="vong_phut">आरपीएम</string>
     <string name="draw_new">नया ड्रा करें</string>
     <string name="clear">साफ करें</string>
     <string name="undo">पूर्ववत करें</string>
@@ -12,4 +13,14 @@
     <string name="save">सहेजें</string>
     <string name="save_success">सफलतापूर्वक सहेजा गया</string>
     <string name="spin_now">अब स्पिन करें</string>
+    <string name="battle_now">अभी लड़ें</string>
+    <string name="custom_spinner">स्पिनर कस्टमाइज़ करें</string>
+    <string name="select_color">रंग चुनें</string>
+    <string name="ready">तैयार</string>
+    <string name="spin_together">साथ में स्पिन करें</string>
+    <string name="player_2">खिलाड़ी 2</string>
+    <string name="you">आप</string>
+    <string name="you_win">आप जीत गए!</string>
+    <string name="you_lose">आप हार गए!</string>
+    <string name="let_spinner_fast">स्पिनर को तेजी से घुमाते रहें।</string>
 </resources>

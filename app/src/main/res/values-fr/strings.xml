@@ -1,4 +1,5 @@
 <resources>
+    <string name="done">Terminé</string>
     <string name="language">Langue</string>
     <string name="onboarding_continue">Continuer</string>
     <string name="onboarding_get_started">Commencer</string>
@@ -10,6 +11,16 @@
     <string name="brush">Pinceau</string>
     <string name="pattern">Motif</string>
     <string name="save">Enregistrer</string>
-    <string name="save_success">Enregistrement réussi</string>
+    <string name="save_success">Enregistré avec succès</string>
     <string name="spin_now">Tourner maintenant</string>
+    <string name="battle_now">Bataille maintenant</string>
+    <string name="custom_spinner">PERSONNALISER LE SPINNER</string>
+    <string name="select_color">Choisir la couleur</string>
+    <string name="ready">PRÊT</string>
+    <string name="spin_together">TOURNER ENSEMBLE</string>
+    <string name="player_2">Joueur 2</string>
+    <string name="you">Toi</string>
+    <string name="you_win">TU AS GAGNÉ !</string>
+    <string name="you_lose">TU AS PERDU !</string>
+    <string name="let_spinner_fast">Continuez à faire tourner le spinner rapidement.</string>
 </resources>

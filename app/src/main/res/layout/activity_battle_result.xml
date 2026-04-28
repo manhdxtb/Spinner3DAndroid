@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_dark"
@@ -30,23 +29,23 @@
         <!-- Header -->
         <ImageView
             android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:padding="8dp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/btnHome"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:id="@+id/btnReset"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_home"
+            android:padding="10dp"
+            android:src="@drawable/ic_reset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,9 +54,9 @@
             android:id="@+id/tvResultStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="sans-serif-black"
-            android:text="YOU WIN!"
+            android:text="@string/you_win"
             android:textColor="@color/color_accent_blue"
             android:textSize="32sp"
             android:textStyle="italic"
@@ -68,33 +67,33 @@
         <!-- 3D Spinner Display -->
         <RelativeLayout
             android:id="@+id/spinning_layout_final"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_marginTop="24dp"
+            android:layout_width="300dp"
+            android:layout_height="330dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvResultStatus">
 
             <ImageView
                 android:id="@+id/spinning_image_view_down_final"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
                 android:alpha="0.2" />
 
             <ImageView
                 android:id="@+id/spinning_image_view_up_final"
-                android:layout_width="250dp"
-                android:layout_height="250dp" />
+                android:layout_width="300dp"
+                android:layout_height="300dp" />
         </RelativeLayout>
 
         <!-- Stats Card -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/cardStats"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="32dp"
             android:background="@drawable/bg_you_card"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,8 +113,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="YOU"
+                android:text="@string/you"
                 android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -124,16 +124,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/ivUserIcon">
-
-                <!-- Placeholder for Gauge -->
-                <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="60dp"
-                    android:src="@android:drawable/ic_menu_compass" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,17 +136,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SPEED"
-                        android:textColor="@color/color_accent_blue"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <TextView
                         android:id="@+id/tvFinalSpeed"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="80.6 r/Min"
                         android:textColor="@color/white"
                         android:textSize="24sp"
@@ -160,7 +147,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

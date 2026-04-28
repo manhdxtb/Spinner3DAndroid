@@ -1,15 +1,26 @@
 <resources>
+    <string name="done">Fertig</string>
     <string name="language">Sprache</string>
     <string name="onboarding_continue">Weiter</string>
     <string name="onboarding_get_started">Loslegen</string>
-    <string name="vong_phut">U/min</string>
+    <string name="vong_phut">U/Min</string>
     <string name="draw_new">Neu zeichnen</string>
     <string name="clear">Löschen</string>
-    <string name="undo">Rückgängig machen</string>
+    <string name="undo">Rückgängig</string>
     <string name="color">Farbe</string>
     <string name="brush">Pinsel</string>
     <string name="pattern">Muster</string>
     <string name="save">Speichern</string>
     <string name="save_success">Erfolgreich gespeichert</string>
     <string name="spin_now">Jetzt drehen</string>
+    <string name="battle_now">Jetzt kämpfen</string>
+    <string name="custom_spinner">SPINNER ANPASSEN</string>
+    <string name="select_color">Farbe wählen</string>
+    <string name="ready">BEREIT</string>
+    <string name="spin_together">ZUSAMMEN DREHEN</string>
+    <string name="player_2">Spieler 2</string>
+    <string name="you">Du</string>
+    <string name="you_win">DU GEWINNST!</string>
+    <string name="you_lose">DU VERLIERST!</string>
+    <string name="let_spinner_fast">Drehen Sie den Spinner weiter schnell.</string>
 </resources>

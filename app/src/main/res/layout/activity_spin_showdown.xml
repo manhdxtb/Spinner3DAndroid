@@ -7,43 +7,39 @@
     android:fitsSystemWindows="true">
 
     <RelativeLayout
+        android:id="@+id/rootAdBanner"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:paddingTop="2dp"
+        android:paddingBottom="1dp" />
+
+    <RelativeLayout
         android:id="@+id/layout_nativeads"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_alignParentBottom="true">
+        android:layout_height="165dp">
 
         <com.google.android.ads.nativetemplates.TemplateView
             android:id="@+id/app_nativeads"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:visibility="gone"
-            app:gnt_template_type="@layout/gnt_small_custom_view_button_top" />
+            app:gnt_template_type="@layout/gnt_small_custom_view" />
 
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/layout_nativeads">
-
-        <!-- Header -->
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:layout_above="@id/rootAdBanner"
+        android:layout_below="@id/layout_nativeads">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutPower"
             android:layout_width="match_parent"
             android:layout_height="28dp"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="65dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -99,8 +95,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/bg_battle_frame"
             app:layout_constraintBottom_toTopOf="@+id/rvReactions"
             app:layout_constraintEnd_toEndOf="parent"
@@ -128,10 +124,11 @@
                     android:textSize="24sp" />
 
                 <TextView
+                    android:id="@+id/tvNameP2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Player 2"
+                    android:text="@string/player_2"
                     android:textColor="#FF9800"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -157,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="You"
+                    android:text="@string/you"
                     android:textColor="@color/color_accent_blue"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -169,7 +166,6 @@
             android:id="@+id/rvReactions"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginBottom="16dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingStart="12dp"

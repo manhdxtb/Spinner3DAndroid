@@ -1,7 +1,8 @@
 <resources>
+    <string name="done">Hecho</string>
     <string name="language">Idioma</string>
     <string name="onboarding_continue">Continuar</string>
-    <string name="onboarding_get_started">Comenzar</string>
+    <string name="onboarding_get_started">Empezar</string>
     <string name="vong_phut">rev/min</string>
     <string name="draw_new">Dibujar nuevo</string>
     <string name="clear">Borrar</string>
@@ -12,4 +13,14 @@
     <string name="save">Guardar</string>
     <string name="save_success">Guardado con éxito</string>
     <string name="spin_now">Girar ahora</string>
+    <string name="battle_now">Batalla ahora</string>
+    <string name="custom_spinner">PERSONALIZAR SPINNER</string>
+    <string name="select_color">Seleccionar color</string>
+    <string name="ready">LISTO</string>
+    <string name="spin_together">GIRAR JUNTOS</string>
+    <string name="player_2">Jugador 2</string>
+    <string name="you">Tú</string>
+    <string name="you_win">¡GANASTE!</string>
+    <string name="you_lose">¡PERDISTE!</string>
+    <string name="let_spinner_fast">Sigue girando el spinner rápido.</string>
 </resources>

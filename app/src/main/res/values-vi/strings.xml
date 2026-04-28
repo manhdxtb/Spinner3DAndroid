@@ -1,4 +1,5 @@
 <resources>
+    <string name="done">Xong</string>
     <string name="language">Ngôn ngữ</string>
     <string name="onboarding_continue">Tiếp tục</string>
     <string name="onboarding_get_started">Bắt đầu</string>
@@ -12,4 +13,14 @@
     <string name="save">Lưu</string>
     <string name="save_success">Lưu thành công</string>
     <string name="spin_now">Quay ngay</string>
+    <string name="battle_now">Đấu ngay</string>
+    <string name="custom_spinner">TÙY CHỈNH SPINNER</string>
+    <string name="select_color">Chọn màu</string>
+    <string name="ready">SẴN SÀNG</string>
+    <string name="spin_together">XOAY CÙNG NHAU</string>
+    <string name="player_2">Người chơi 2</string>
+    <string name="you">Bạn</string>
+    <string name="you_win">BẠN THẮNG!</string>
+    <string name="you_lose">BẠN THUA!</string>
+    <string name="let_spinner_fast">Hãy quay spinner thật nhanh.</string>
 </resources>

@@ -1,15 +1,26 @@
 <resources>
+    <string name="done">Bitti</string>
     <string name="language">Dil</string>
     <string name="onboarding_continue">Devam Et</string>
     <string name="onboarding_get_started">Başla</string>
-    <string name="vong_phut">dev/dk</string>
-    <string name="draw_new">Yeni çiz</string>
+    <string name="vong_phut">dev/dak</string>
+    <string name="draw_new">Yeni Çiz</string>
     <string name="clear">Temizle</string>
-    <string name="undo">Geri al</string>
+    <string name="undo">Geri Al</string>
     <string name="color">Renk</string>
     <string name="brush">Fırça</string>
     <string name="pattern">Desen</string>
     <string name="save">Kaydet</string>
-    <string name="save_success">Başarıyla kaydedildi</string>
-    <string name="spin_now">Şimdi döndür</string>
+    <string name="save_success">Başarıyla Kaydedildi</string>
+    <string name="spin_now">Şimdi Döndür</string>
+    <string name="battle_now">Şimdi Savaş</string>
+    <string name="custom_spinner">SPINNER\'I ÖZELLEŞTİR</string>
+    <string name="select_color">Renk Seç</string>
+    <string name="ready">HAZIR</string>
+    <string name="spin_together">BİRLİKTE DÖNDÜR</string>
+    <string name="player_2">Oyuncu 2</string>
+    <string name="you">Sen</string>
+    <string name="you_win">KAZANDIN!</string>
+    <string name="you_lose">KAYBETTİN!</string>
+    <string name="let_spinner_fast">Spinner\'ı hızlıca döndürmeye devam edin.</string>
 </resources>

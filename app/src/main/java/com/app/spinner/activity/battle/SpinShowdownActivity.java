@@ -2,7 +2,6 @@ package com.app.spinner.activity.battle;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.spinner.R;
 import com.app.spinner.databinding.ActivitySpinShowdownBinding;
 import com.app.spinner.util.BitmapUtils;
+import com.app.spinner.util.Utils;
 import com.app.spinner.view.BattleView;
 
 import java.util.Arrays;
@@ -26,6 +25,7 @@ import java.util.List;
 import java.util.Random;
 
 import app.ads.BaseAdsPopupActivity;
+import app.ads.RemoteConfig;
 
 public class SpinShowdownActivity extends BaseAdsPopupActivity {
 
@@ -33,6 +33,7 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
     private float initialRpmYou, initialRpmP2;
     private String shapeYou, shapeP2;
     private int colorYou, colorP2;
+    private long timeVaCham;
 
     private static final float RPM_REDUCTION = 10f;
 
@@ -46,6 +47,7 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userSetShowPopupAds(false);
         super.onCreate(savedInstanceState);
         binding = ActivitySpinShowdownBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -59,17 +61,21 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
         initialRpmYou = BattleData.rpmYou;
         initialRpmP2 = BattleData.rpmP2;
 
+        binding.tvNameP2.setText(BattleData.nameP2);
+
         initBattle();
         setupEmojiControls();
         startAIReactions();
 
-        binding.btnBack.setOnClickListener(v -> finish());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showNativeAdsActivity();
+        showBannerCollapActivity();
+        if (RemoteConfig.remote_show_native_som_on_list) {
+            showNativeAdsActivity();
+        }
     }
 
     private void setupEmojiControls() {
@@ -97,8 +103,8 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
         binding.progressYou.getBackground().setLevel(10000);
 
         // Load Bitmaps without additional tinting
-        Bitmap bYou = BitmapUtils.getTintedBitmapFromAsset(this, shapeYou, 0xFFFFFFFF);
-        Bitmap bP2 = BitmapUtils.getTintedBitmapFromAsset(this, shapeP2, 0xFFFFFFFF);
+        Bitmap bYou = BitmapUtils.loadBitmap(this, shapeYou);
+        Bitmap bP2 = BitmapUtils.loadBitmap(this, shapeP2);
 
         if (bYou != null && bP2 != null) {
             binding.battleView.setRpmReduction(RPM_REDUCTION);
@@ -107,20 +113,33 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
                 public void onCollision(float speedYou, float speedP2) {
                     runOnUiThread(() -> {
                         updateProgress(speedYou, speedP2);
-                        showNativeAdsActivity();
+                        if (Utils.timeNow() - timeVaCham >= 5000) {
+                            timeVaCham = Utils.timeNow();
+                            if (RemoteConfig.remote_show_native_som_on_list) {
+                                showNativeAdsActivity();
+                            }
+                        }
                     });
                 }
 
                 @Override
                 public void onGameOver(boolean youWin) {
                     runOnUiThread(() -> {
+                        // Stop emoji reactions
+                        emojiHandler.removeCallbacksAndMessages(null);
+
                         BattleData.youWin = youWin;
                         BattleData.finalSpeed = youWin ? initialRpmYou : initialRpmP2;
-                        
+
                         Intent intent = new Intent(SpinShowdownActivity.this, BattleResultActivity.class);
                         startActivity(intent);
-                        finish();
+                        activity.finish();
                     });
+                }
+
+                @Override
+                public void onBanPhaoHoa() {
+                    showNativeAdsActivity();
                 }
 
                 @Override

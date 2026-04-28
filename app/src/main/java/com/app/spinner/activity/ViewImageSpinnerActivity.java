@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.app.spinner.activity.battle.BattleData;
 import com.app.spinner.activity.battle.SpinTogetherActivity;
 import com.app.spinner.databinding.ActivityViewImageSpinnerBinding;
 import com.bumptech.glide.Glide;
@@ -70,8 +71,8 @@ public class ViewImageSpinnerActivity extends BaseAdsPopupActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(activity, SpinTogetherActivity.class);
-                    intent.putExtra("shape", imagePath);
-                    intent.putExtra("color", Color.parseColor("#FFFFFF"));
+                    BattleData.shapeYou = imagePath;
+                    BattleData.colorYou = Color.parseColor("#FFFFFF");
                     startActivity(intent);
                 }
             });

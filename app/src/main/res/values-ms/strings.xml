@@ -1,15 +1,26 @@
 <resources>
+    <string name="done">Selesai</string>
     <string name="language">Bahasa</string>
     <string name="onboarding_continue">Teruskan</string>
     <string name="onboarding_get_started">Mulakan</string>
-    <string name="vong_phut">pusingan/minit</string>
-    <string name="draw_new">Lukis baru</string>
+    <string name="vong_phut">rpm</string>
+    <string name="draw_new">Lukis Baru</string>
     <string name="clear">Padam</string>
-    <string name="undo">Batal</string>
+    <string name="undo">Buat asal</string>
     <string name="color">Warna</string>
     <string name="brush">Berus</string>
     <string name="pattern">Corak</string>
     <string name="save">Simpan</string>
-    <string name="save_success">Berjaya disimpan</string>
-    <string name="spin_now">Putar sekarang</string>
+    <string name="save_success">Berjaya Disimpan</string>
+    <string name="spin_now">Putar Sekarang</string>
+    <string name="battle_now">Lawan Sekarang</string>
+    <string name="custom_spinner">SESUAIKAN SPINNER</string>
+    <string name="select_color">Pilih Warna</string>
+    <string name="ready">SEDIA</string>
+    <string name="spin_together">PUTAR BERSAMA</string>
+    <string name="player_2">Pemain 2</string>
+    <string name="you">Anda</string>
+    <string name="you_win">ANDA MENANG!</string>
+    <string name="you_lose">ANDA KALAH!</string>
+    <string name="let_spinner_fast">Terus putar spinner dengan pantas.</string>
 </resources>

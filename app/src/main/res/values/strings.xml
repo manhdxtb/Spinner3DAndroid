@@ -16,4 +16,14 @@
     <string name="save_success">Save Success</string>
     <string name="spin_now">Spin Now</string>
     <string name="battle_now">Battle Now</string>
+    <string name="custom_spinner">CUSTOM SPINNER</string>
+    <string name="select_color">Select Color</string>
+    <string name="ready">READY</string>
+    <string name="spin_together">SPIN TOGETHER</string>
+    <string name="player_2">Player 2</string>
+    <string name="you">You</string>
+    <string name="you_win">YOU WIN!</string>
+    <string name="you_lose">YOU LOSE!</string>
+    <string name="let_spinner_fast">Keep spinning the spinner fast.</string>
+
 </resources>

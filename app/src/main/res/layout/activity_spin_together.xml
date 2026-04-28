@@ -33,7 +33,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:padding="8dp"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="sans-serif-black"
-            android:text="SPIN TOGETHER"
+            android:text="@string/spin_together"
             android:textColor="@color/color_accent_blue"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/btnBack"
@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="120dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="15dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_player_card"
             app:layout_constraintEnd_toEndOf="parent"
@@ -143,10 +143,11 @@
                     app:tint="#FF9800" />
 
                 <TextView
+                    android:id="@+id/tvNameP2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Player 2"
+                    android:text="@string/player_2"
                     android:textColor="#FF9800"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -157,9 +158,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cardYou"
             android:layout_width="0dp"
-            android:layout_height="250dp"
+            android:layout_height="270dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_you_card"
             app:layout_constraintEnd_toEndOf="parent"
@@ -170,7 +171,7 @@
             <RelativeLayout
                 android:id="@+id/spinning_layout_you"
                 android:layout_width="250dp"
-                android:layout_height="250dp"
+                android:layout_height="270dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -209,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="You"
+                    android:text="@string/you"
                     android:textColor="@color/color_accent_blue"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -231,7 +232,7 @@
             android:id="@+id/layoutSpeedYou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/bg_popup_gray"
             android:gravity="center_vertical"
             android:orientation="horizontal"

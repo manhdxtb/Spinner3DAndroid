@@ -30,10 +30,9 @@
     <RelativeLayout
         android:id="@+id/spinning_layout_p2"
         android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_height="300dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp">
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/spinning_image_view_down_p2"
@@ -52,7 +51,7 @@
     <RelativeLayout
         android:id="@+id/spinning_layout_user"
         android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_height="300dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="125dp">
@@ -68,5 +67,17 @@
             android:layout_width="280dp"
             android:layout_height="280dp" />
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_above="@id/layout_nativeads"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginBottom="5dp"
+        android:max="100"
+        android:progress="10"
+        android:progressDrawable="@drawable/bg_progress_battle" />
 
 </RelativeLayout>

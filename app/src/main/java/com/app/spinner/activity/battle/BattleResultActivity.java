@@ -1,17 +1,13 @@
 package com.app.spinner.activity.battle;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 
 import com.app.spinner.R;
-import com.app.spinner.activity.MainActivity;
 import com.app.spinner.databinding.ActivityBattleResultBinding;
 import com.bumptech.glide.Glide;
 
@@ -22,7 +18,7 @@ public class BattleResultActivity extends BaseAdsPopupActivity {
     private ActivityBattleResultBinding binding;
     private final Handler rotationHandler = new Handler(Looper.getMainLooper());
     private long lastFrameTime = 0;
-    private float currentVisualRpm = 200f;
+    private float currentVisualRpm = 20f;
     private float angle = 0f;
     private boolean increasing = true;
 
@@ -36,7 +32,7 @@ public class BattleResultActivity extends BaseAdsPopupActivity {
         float finalSpeed = BattleData.finalSpeed;
         String shape = BattleData.shapeYou;
 
-        binding.tvResultStatus.setText(youWin ? "YOU WIN!" : "YOU LOSE!");
+        binding.tvResultStatus.setText(youWin ? getString(R.string.you_win) : getString(R.string.you_lose));
         binding.tvResultStatus.setTextColor(youWin ? 0xFF00E5FF : Color.RED);
         binding.tvFinalSpeed.setText(String.format("%.1f ", finalSpeed) + getString(R.string.vong_phut));
 
@@ -45,12 +41,17 @@ public class BattleResultActivity extends BaseAdsPopupActivity {
         }
 
         binding.btnBack.setOnClickListener(v -> finish());
-        binding.btnHome.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MainActivity.class);
+        binding.btnReset.setOnClickListener(v -> {
+            // Cleanup rotation
+            rotationHandler.removeCallbacks(rotationRunnable);
+
+            Intent intent = new Intent(this, SpinTogetherActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+
+            activity.finish();
         });
-        
+
         startRotationLoop();
     }
 
@@ -92,7 +93,7 @@ public class BattleResultActivity extends BaseAdsPopupActivity {
             lastFrameTime = currentTime;
 
             // Oscillate RPM between 200 and 500
-            float speedStep = 100f * deltaTime; // Adjust speed of oscillation
+            float speedStep = 20f * deltaTime; // Adjust speed of oscillation
             if (increasing) {
                 currentVisualRpm += speedStep;
                 if (currentVisualRpm >= 500f) {
@@ -101,8 +102,8 @@ public class BattleResultActivity extends BaseAdsPopupActivity {
                 }
             } else {
                 currentVisualRpm -= speedStep;
-                if (currentVisualRpm <= 200f) {
-                    currentVisualRpm = 200f;
+                if (currentVisualRpm <= 50f) {
+                    currentVisualRpm = 50f;
                     increasing = true;
                 }
             }
@@ -111,7 +112,7 @@ public class BattleResultActivity extends BaseAdsPopupActivity {
             binding.spinningImageViewUpFinal.setRotation(angle);
             binding.spinningImageViewDownFinal.setRotation(angle);
 
-            rotationHandler.postDelayed(this, 16);
+            rotationHandler.postDelayed(this, 20);
         }
     };
 

@@ -2,12 +2,13 @@ package app.ads;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowMetrics;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,9 @@ public class BannerAds {
                             adViewAdmob.setAdSize(adSize);
 
                             Bundle extras = new Bundle();
-                            extras.putString("collapsible", "bottom");
+                            if (RemoteConfig.remote_show_collap_ad) {
+                                extras.putString("collapsible", "bottom");
+                            }
 
                             adViewAdmob.setAdUnitId(AdmobAds.key_admob_banner_collap);
                             AdRequest adRequest = new AdRequest.Builder()
@@ -52,7 +55,6 @@ public class BannerAds {
                                     .build();
                             adViewAdmob.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                             adViewAdmob.setBackgroundColor(Color.WHITE);
-                            adViewAdmob.loadAd(adRequest);
 
                             adViewAdmob.setAdListener(new AdListener() {
 
@@ -77,7 +79,7 @@ public class BannerAds {
                                     Log.d("Admob Collap Banner", adError.getMessage());
 
                                     try {
-                                        ((View) adViewAdmob.getParent()).setVisibility(View.GONE);
+                                        ((ViewGroup) adViewAdmob.getParent()).removeAllViews();
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -108,10 +110,12 @@ public class BannerAds {
                                 }
                             });
 
-                            ViewGroup rootView = view.findViewById(R.id.rootAdBanner);
-                            rootView.addView(adViewAdmob);
+                            adViewAdmob.loadAd(adRequest);
 
-                            rootView.setVisibility(View.GONE);
+                            ViewGroup rootView = view.findViewById(R.id.rootAdBanner);
+                            if (rootView == null) return;
+                            rootView.removeAllViews();
+                            rootView.addView(adViewAdmob);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -151,7 +155,6 @@ public class BannerAds {
                             AdRequest adRequest = new AdRequest.Builder().build();
                             adViewAdmob.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                             adViewAdmob.setBackgroundColor(Color.WHITE);
-                            adViewAdmob.loadAd(adRequest);
 
                             adViewAdmob.setAdListener(new AdListener() {
 
@@ -176,7 +179,7 @@ public class BannerAds {
                                     Log.d("Admob Banner", adError.getMessage());
 
                                     try {
-                                        ((View) adViewAdmob.getParent()).setVisibility(View.GONE);
+                                        ((ViewGroup) adViewAdmob.getParent()).removeAllViews();
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
@@ -199,10 +202,12 @@ public class BannerAds {
                                 }
                             });
 
-                            ViewGroup rootView = view.findViewById(R.id.rootAdBanner);
-                            rootView.addView(adViewAdmob);
+                            adViewAdmob.loadAd(adRequest);
 
-                            rootView.setVisibility(View.GONE);
+                            ViewGroup rootView = view.findViewById(R.id.rootAdBanner);
+                            if (rootView == null) return;
+                            rootView.removeAllViews();
+                            rootView.addView(adViewAdmob);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -280,14 +285,24 @@ public class BannerAds {
         }
     }
 
-    private static AdSize getAdSize(Activity context) {
-        Display display = context.getWindowManager().getDefaultDisplay();
+    private static AdSize getAdSize(Activity activity) {
         DisplayMetrics outMetrics = new DisplayMetrics();
-        display.getMetrics(outMetrics);
-        float density = outMetrics.density;
-        float adWidthPixels = outMetrics.widthPixels;
+        int adWidthPixels = 0;
+
+        // Android 11 (API 30)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            WindowMetrics windowMetrics = activity.getWindowManager().getCurrentWindowMetrics();
+            adWidthPixels = windowMetrics.getBounds().width();
+        } else {
+            // Old Device
+            activity.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+            adWidthPixels = outMetrics.widthPixels;
+        }
+
+        float density = activity.getResources().getDisplayMetrics().density;
         int adWidth = (int) (adWidthPixels / density);
-        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(context, adWidth);
+
+        return AdSize.getPortraitAnchoredAdaptiveBannerAdSize(activity, adWidth);
     }
 
 }

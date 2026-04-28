@@ -1,15 +1,26 @@
 <resources>
+    <string name="done">เสร็จสิ้น</string>
     <string name="language">ภาษา</string>
     <string name="onboarding_continue">ดำเนินการต่อ</string>
-    <string name="onboarding_get_started">เริ่มต้น</string>
+    <string name="onboarding_get_started">เริ่มต้นใช้งาน</string>
     <string name="vong_phut">รอบ/นาที</string>
     <string name="draw_new">วาดใหม่</string>
     <string name="clear">ล้าง</string>
     <string name="undo">เลิกทำ</string>
     <string name="color">สี</string>
     <string name="brush">แปรง</string>
-    <string name="pattern">ลวดลาย</string>
+    <string name="pattern">รูปแบบ</string>
     <string name="save">บันทึก</string>
     <string name="save_success">บันทึกสำเร็จ</string>
     <string name="spin_now">หมุนตอนนี้</string>
+    <string name="battle_now">ต่อสู้ตอนนี้</string>
+    <string name="custom_spinner">ปรับแต่งสปินเนอร์</string>
+    <string name="select_color">เลือกสี</string>
+    <string name="ready">พร้อม</string>
+    <string name="spin_together">หมุนด้วยกัน</string>
+    <string name="player_2">ผู้เล่น 2</string>
+    <string name="you">คุณ</string>
+    <string name="you_win">คุณชนะ!</string>
+    <string name="you_lose">คุณแพ้!</string>
+    <string name="let_spinner_fast">หมุนสปินเนอร์ให้เร็วต่อไป</string>
 </resources>

@@ -102,10 +102,10 @@ public class CustomSpinnerActivity extends BaseAdsPopupActivity {
 
         binding.btnReady.setOnClickListener(v -> {
             String finalPath = allSpinnerPaths.get(selectedTypeIndex).get(selectedColorIndex);
-            
+
             BattleData.shapeYou = finalPath;
             BattleData.colorYou = Color.parseColor(hexColors[selectedColorIndex]);
-            
+
             Intent intent = new Intent(this, SpinTogetherActivity.class);
             startActivity(intent);
         });
@@ -117,7 +117,7 @@ public class CustomSpinnerActivity extends BaseAdsPopupActivity {
         if (selectedTypeIndex < allSpinnerPaths.size()) {
             String path = allSpinnerPaths.get(selectedTypeIndex).get(selectedColorIndex);
             Glide.with(this).load(path).into(binding.ivPreview);
-            binding.ivPreview.clearColorFilter();
+            showNativeAdsActivity();
         }
     }
 
@@ -157,11 +157,17 @@ public class CustomSpinnerActivity extends BaseAdsPopupActivity {
         }
 
         @Override
-        public int getItemCount() { return paths.size(); }
+        public int getItemCount() {
+            return paths.size();
+        }
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             ImageView ivShape;
-            ViewHolder(View v) { super(v); ivShape = v.findViewById(R.id.ivShape); }
+
+            ViewHolder(View v) {
+                super(v);
+                ivShape = v.findViewById(R.id.ivShape);
+            }
         }
     }
 
@@ -202,13 +208,21 @@ public class CustomSpinnerActivity extends BaseAdsPopupActivity {
         }
 
         @Override
-        public int getItemCount() { return hexColors.length; }
+        public int getItemCount() {
+            return hexColors.length;
+        }
 
         static class ViewHolder extends RecyclerView.ViewHolder {
             View viewColor;
-            ViewHolder(View v) { super(v); viewColor = v.findViewById(R.id.viewColor); }
+
+            ViewHolder(View v) {
+                super(v);
+                viewColor = v.findViewById(R.id.viewColor);
+            }
         }
     }
 
-    interface OnIndexClickListener { void onIndexClick(int index); }
+    interface OnIndexClickListener {
+        void onIndexClick(int index);
+    }
 }

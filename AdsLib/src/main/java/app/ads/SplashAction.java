@@ -2,6 +2,7 @@ package app.ads;
 
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -44,36 +45,32 @@ public class SplashAction {
     private void loadMessGDPR() {
         if (PopupNetworkAds.IS_PRO) {
             startThreadShowAdsOpenApp(10);
+            return;
+        }
+
+        long timeNow = System.currentTimeMillis();
+        long timeLastCheck = SharedAdsGlobalUtil.getLongValue(activity, "TIME_CHECK_MESSGDPR");
+
+        // Check GDPR định kỳ (Ví dụ: 999000000L ~ 11 ngày)
+        if (timeNow - timeLastCheck > 999000000L) {
+            MessGDPR.getInstance().onCreate(activity, new MessGDPR.MessGDPRListener() {
+                @Override
+                public void onDone(boolean canRequestAds) {
+                    SharedAdsGlobalUtil.setLongValue(activity, "TIME_CHECK_MESSGDPR", System.currentTimeMillis());
+                    // Dù canRequestAds là true hay false, ta vẫn init Ads
+                    // (SDK AdMob sẽ tự handle việc có load ads thật hay không dựa trên consent)
+                    startInitAds(100);
+                }
+
+                @Override
+                public void onError() {
+                    // Fail-safe: Nếu lỗi thì cứ cho vào app và init ads bình thường
+                    Log.e("GDPR", "UMP Error, proceeding to init ads");
+                    startInitAds(100);
+                }
+            });
         } else {
-            long timeNow = System.currentTimeMillis();
-            long time_check_messgdpr = SharedAdsGlobalUtil.getLongValue(activity, "TIME_CHECK_MESSGDPR");
-            if (timeNow - time_check_messgdpr > 999000000L) {
-                MessGDPR.MessGDPRListener listener = new MessGDPR.MessGDPRListener() {
-                    @Override
-                    public void onDone(boolean canRequestAds) {
-                        SharedAdsGlobalUtil.setLongValue(activity, "TIME_CHECK_MESSGDPR", System.currentTimeMillis());
-                        if (canRequestAds) {
-                            startInitAds(100);
-                        } else {
-                            splashNextActivity.gotoNextActivity();
-                        }
-                    }
-
-                    @Override
-                    public void onError() {
-//                        SharedAdsGlobalUtil.setLongValue(activity, "TIME_CHECK_MESSGDPR", 0);
-//                        splashNextActivity.gotoNextActivity();
-
-
-                        // Test thoi, chay that thi xoa di
-                        SharedAdsGlobalUtil.setLongValue(activity, "TIME_CHECK_MESSGDPR", System.currentTimeMillis());
-                        startInitAds(100);
-                    }
-                };
-                MessGDPR.getInstance().onCreate(activity, listener);
-            } else {
-                startInitAds(100);
-            }
+            startInitAds(100);
         }
     }
 
@@ -157,7 +154,7 @@ public class SplashAction {
                                 break;
                             }
                         } else {
-                            android.util.Log.e("Admob Applovin Ads", "Admob nextMainActivity    NOT  ConditionOpenAppAds");
+                            Log.e("Admob Applovin Ads", "Admob nextMainActivity    NOT  ConditionOpenAppAds");
                             try {
                                 splashNextActivity.gotoNextActivity();
                                 break;
@@ -167,7 +164,7 @@ public class SplashAction {
                     }
                 }
                 if (i >= max_i) {
-                    android.util.Log.e("Admob Applovin Ads", "nextMainActivity    i >= 100");
+                    Log.e("Admob Applovin Ads", "nextMainActivity    i >= 100");
                     try {
                         splashNextActivity.gotoNextActivity();
                     } catch (Exception e) {
@@ -207,6 +204,7 @@ public class SplashAction {
                 "    \"ads_offset_openapp\": \"30\",\n" +
                 "    \"max_native_ads\": \"8\",\n" +
                 "    \"ads_native_on\": \"true\",\n" +
+                "    \"buy_vip_active\": \"true\",\n" +
                 "    \"native_splash\": \"true\",\n" +
                 "    \"ads_openapp_on\": \"true\",\n" +
                 "    \"show_language_ads\": \"true\",\n" +
@@ -247,7 +245,6 @@ public class SplashAction {
                             RemoteConfig.remote_rating_popup = jsonObject.getBoolean("rating_popup");
                             RemoteConfig.remote_show_collap_ad = jsonObject.getBoolean("show_collap_ad");
                             RemoteConfig.remote_ads_resume_app = jsonObject.getBoolean("ads_resume_app");
-                            RemoteConfig.remote_max_native_ads = (int) jsonObject.getLong("max_native_ads");
                             RemoteConfig.remote_time_reload_collap_ad = (int) jsonObject.getLong("time_reload_collap_ad");
                             RemoteConfig.remote_show_banner_ads_home = (int) jsonObject.getLong("show_banner_ads_home");
                             RemoteConfig.remote_time_start_show_popup = (int) jsonObject.getLong("time_start_show_popup");
@@ -261,6 +258,14 @@ public class SplashAction {
                             RemoteConfig.remote_show_language_screen = jsonObject.getBoolean("show_language_screen");
                             RemoteConfig.remote_show_onboarding_preview = jsonObject.getBoolean("show_onboarding_preview");
                             RemoteConfig.remote_ads_popup_switch_home_category = jsonObject.getBoolean("ads_popup_switch_home_category");
+                            try {
+                                RemoteConfig.remote_max_native_ads = (int) jsonObject.getLong("max_native_ads");
+                            } catch (Exception e) {
+                            }
+                            try {
+                                RemoteConfig.remote_buy_vip_active = jsonObject.getBoolean("buy_vip_active");
+                            } catch (Exception e) {
+                            }
 
                             RemoteConfig.saveToPreferences();
                         } catch (Exception e) {

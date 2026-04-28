@@ -33,7 +33,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:padding="8dp"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="sans-serif-black"
-            android:text="CUSTOM SPINNER"
+            android:text="@string/custom_spinner"
             android:textColor="@color/color_accent_blue"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/btnBack"
@@ -58,30 +58,16 @@
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@+id/tvSelectItem"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvTitle"
             tools:src="@drawable/homt_ic_btn_spinner" />
 
-        <!-- Select Item -->
-        <TextView
-            android:id="@+id/tvSelectItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Select item"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/rvShapes"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvShapes"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="10dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingStart="12dp"
@@ -97,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Select Color"
+            android:text="@string/select_color"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/rvColors"
@@ -107,7 +93,7 @@
             android:id="@+id/rvColors"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="20dp"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingStart="12dp"
@@ -133,8 +119,8 @@
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:background="@drawable/bg_custom_spinner_item"
-                android:padding="12dp"
-                android:src="@drawable/ic_patten_0" />
+                android:padding="9dp"
+                android:src="@drawable/ic_xucxac" />
 
             <Space
                 android:layout_width="12dp"
@@ -145,7 +131,7 @@
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_btn_ready">
+                android:background="@drawable/bg_button_ads">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -154,20 +140,14 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@android:drawable/ic_delete"
-                        app:tint="@color/black" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:fontFamily="sans-serif-black"
-                        android:text="READY"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:text="@string/ready"
+                        android:textColor="@color/white"
+                        android:textSize="22sp" />
 
                 </LinearLayout>
             </FrameLayout>
