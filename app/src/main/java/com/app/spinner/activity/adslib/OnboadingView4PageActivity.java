@@ -55,7 +55,7 @@ public class OnboadingView4PageActivity extends BaseAdsPopupActivity {
             getSupportActionBar().hide();
         } catch (Exception e) {
         }
-        if (!RemoteConfig.remote_show_onboarding_preview) {
+        if (!RemoteConfig.remote_show_onboarding_preview || NativeAdmobAdsPreview.getTotalNativeAds() == 0) {
             goNextActivity();
             return;
         }
@@ -123,6 +123,8 @@ public class OnboadingView4PageActivity extends BaseAdsPopupActivity {
     }
 
     private void goNextActivity() {
+        App.self().printKeyHash();
+
         long timeNow = System.currentTimeMillis();
         PopupNetworkAds.saveTimeOpenAppAds(App.self());
         SharedAdsGlobalUtil.setValue(getApplicationContext(), "TIME_SPLASH_ACTION", "" + timeNow);

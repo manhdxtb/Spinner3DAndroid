@@ -13,11 +13,9 @@
     <RelativeLayout
         android:id="@+id/rootAdBanner"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:paddingTop="2dp"
-        android:paddingBottom="1dp" />
+        android:gravity="center" />
 
     <RelativeLayout
         android:id="@+id/root_layout"

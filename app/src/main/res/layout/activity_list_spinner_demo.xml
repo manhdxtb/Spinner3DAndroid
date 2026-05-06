@@ -18,11 +18,9 @@
         <RelativeLayout
             android:id="@+id/rootAdBanner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:paddingTop="2dp"
-            android:paddingBottom="1dp" />
+            android:gravity="center" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/image_recycler_view"

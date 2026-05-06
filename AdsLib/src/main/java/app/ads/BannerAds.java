@@ -27,6 +27,13 @@ public class BannerAds {
 
     public static void loadBannerCollapAds(Activity activity, View view, ResultListener listener) {
         if (PopupNetworkAds.IS_PRO) {
+            try {
+                int heightInPx = 1;
+                ViewGroup.LayoutParams params = view.findViewById(R.id.rootAdBanner).getLayoutParams();
+                params.height = heightInPx;
+                view.findViewById(R.id.rootAdBanner).setLayoutParams(params);
+            } catch (Exception e) {
+            }
             return;
         }
 
@@ -128,6 +135,13 @@ public class BannerAds {
 
     public static void loadBannerAds(Activity activity, View view) {
         if (PopupNetworkAds.IS_PRO) {
+            try {
+                int heightInPx = 1;
+                ViewGroup.LayoutParams params = view.findViewById(R.id.rootAdBanner).getLayoutParams();
+                params.height = heightInPx;
+                view.findViewById(R.id.rootAdBanner).setLayoutParams(params);
+            } catch (Exception e) {
+            }
             return;
         }
 
