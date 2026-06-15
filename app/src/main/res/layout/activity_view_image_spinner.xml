@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 app:gnt_size_min="true"
-                app:gnt_template_type="@layout/gnt_medium_template_view_button_top" />
+                app:gnt_template_type="@layout/gnt_medium_template_view" />
 
         </RelativeLayout>
 

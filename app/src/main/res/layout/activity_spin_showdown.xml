@@ -18,6 +18,16 @@
         android:layout_width="match_parent"
         android:layout_height="165dp">
 
+        <ImageView
+            android:id="@+id/image_bg_nativeads"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginBottom="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/image_bg_native_battle"
+            android:visibility="gone" />
+
         <com.google.android.ads.nativetemplates.TemplateView
             android:id="@+id/app_nativeads"
             android:layout_width="match_parent"

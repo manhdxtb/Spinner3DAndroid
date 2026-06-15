@@ -187,6 +187,13 @@ public class OnboadingView4PageActivity extends BaseAdsPopupActivity {
                 }
             }
         });
+        View btnClose = view.findViewById(R.id.btn_close);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnNext.callOnClick();
+            }
+        });
         return view;
     }
 
@@ -197,11 +204,15 @@ public class OnboadingView4PageActivity extends BaseAdsPopupActivity {
             if (index == 1 || index == 2 || index == 4) {
                 view = createPageView_Small();
                 TemplateView nativeAds_Ngan = view.findViewById(R.id.app_nativeads_ngan);
-                if (NativeAdmobAdsPreview.getTotalNativeAds() > 0) {
-                    nativeAds_Ngan.setVisibility(View.VISIBLE);
-                    NativeAdmobAdsPreview.showNativeAd(nativeAds_Ngan);
+                if (index == 2) {
+                    nativeAds_Ngan.setVisibility(View.GONE);
                 } else {
-                    nativeAds_Ngan.setVisibility(View.INVISIBLE);
+                    if (NativeAdmobAdsPreview.getTotalNativeAds() > 0) {
+                        nativeAds_Ngan.setVisibility(View.VISIBLE);
+                        NativeAdmobAdsPreview.showNativeAd(nativeAds_Ngan);
+                    } else {
+                        nativeAds_Ngan.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
             if (index == 3) {

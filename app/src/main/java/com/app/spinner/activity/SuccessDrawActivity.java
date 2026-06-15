@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import app.ads.BaseAdsPopupActivity;
+import app.ads.RemoteConfig;
 
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
@@ -80,6 +81,8 @@ public class SuccessDrawActivity extends BaseAdsPopupActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showNativeAdsActivity();
+        if (RemoteConfig.remote_max_native_ads >= 4) {
+            showNativeAdsActivity();
+        }
     }
 }

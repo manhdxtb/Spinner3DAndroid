@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:gnt_template_type="@layout/gnt_small_custom_view_button_top" />
+            app:gnt_template_type="@layout/gnt_small_custom_view" />
 
     </RelativeLayout>
 
@@ -131,7 +131,7 @@
                 android:layout_width="0dp"
                 android:layout_height="56dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_button_ads">
+                android:background="@drawable/bg_button_app">
 
                 <LinearLayout
                     android:layout_width="wrap_content"

@@ -18,6 +18,7 @@ import com.app.spinner.databinding.ActivityViewImageSpinnerBinding;
 import com.bumptech.glide.Glide;
 
 import app.ads.BaseAdsPopupActivity;
+import app.ads.RemoteConfig;
 
 public class ViewImageSpinnerActivity extends BaseAdsPopupActivity {
 
@@ -84,6 +85,8 @@ public class ViewImageSpinnerActivity extends BaseAdsPopupActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showNativeAdsActivity();
+        if (RemoteConfig.remote_max_native_ads >= 4) {
+            showNativeAdsActivity();
+        }
     }
 }

@@ -46,14 +46,14 @@ public class NativeAdmobAdsPreview {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            requestNativeAds(AdmobAds.key_admob_native_preview_small);
+                            requestNativeAds(AdmobAds.key_admob_native_preview_full);
                         }
                     });
                     Thread.sleep(3000);
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            requestNativeAds(AdmobAds.key_admob_native_preview_full);
+                            requestNativeAds(AdmobAds.key_admob_native_preview_small);
                         }
                     });
                 } catch (Exception e) {

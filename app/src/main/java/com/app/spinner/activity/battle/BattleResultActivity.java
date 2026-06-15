@@ -12,6 +12,7 @@ import com.app.spinner.databinding.ActivityBattleResultBinding;
 import com.bumptech.glide.Glide;
 
 import app.ads.BaseAdsPopupActivity;
+import app.ads.RemoteConfig;
 
 public class BattleResultActivity extends BaseAdsPopupActivity {
 
@@ -119,7 +120,9 @@ public class BattleResultActivity extends BaseAdsPopupActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showNativeAdsActivity();
+        if (RemoteConfig.remote_max_native_ads >= 4) {
+            showNativeAdsActivity();
+        }
     }
 
     @Override

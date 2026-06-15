@@ -16,6 +16,7 @@ import java.util.Random;
 
 import app.ads.BaseAdsPopupActivity;
 import app.ads.NativeAdmobAds;
+import app.ads.RemoteConfig;
 
 public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
 
@@ -81,6 +82,12 @@ public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
         float halfMarginPx = (marginDp / 2f) * density;
 
         // User Spinner
+        if (RemoteConfig.remote_max_native_ads < 4) {
+            binding.spinningImageViewUpUser.setVisibility(ImageView.GONE);
+            binding.spinningImageViewDownUser.setVisibility(ImageView.GONE);
+            binding.spinningImageViewUpP2.setVisibility(ImageView.GONE);
+            binding.spinningImageViewDownP2.setVisibility(ImageView.GONE);
+        }
         Glide.with(this).load(shapeYou).into(binding.spinningImageViewUpUser);
         Glide.with(this).load(shapeYou).into(binding.spinningImageViewDownUser);
         binding.spinningImageViewUpUser.setCameraDistance(cameraDistance);
@@ -180,7 +187,9 @@ public class BattleLoadingAdsActivity extends BaseAdsPopupActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        showNativeAdsActivity();
+        if (RemoteConfig.remote_max_native_ads >= 4) {
+            showNativeAdsActivity();
+        }
     }
 
     @Override

@@ -18,6 +18,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:visibility="invisible"
+            app:gnt_size_min="true"
             app:gnt_template_type="@layout/gnt_medium_template_view" />
 
         <ProgressBar
@@ -67,7 +68,7 @@
                     android:layout_centerInParent="true"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/bg_button_ads"
+                    android:background="@drawable/bg_button_app"
                     android:paddingHorizontal="20dp"
                     android:paddingTop="6dp"
                     android:paddingBottom="7dp"

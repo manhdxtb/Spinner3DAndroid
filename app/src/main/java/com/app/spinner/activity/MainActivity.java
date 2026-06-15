@@ -59,7 +59,7 @@ public class MainActivity extends BaseAdsPopupActivity {
                 try {
                     for (int i = 0; i < 60; i++) {
                         Thread.sleep(300);
-                        if (NativeAdmobAds.getTotalNativeAds() > 0) {
+                        if (NativeAdmobAds.getTotalNativeAds() > 0 && RemoteConfig.remote_max_native_ads >= 4) {
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {

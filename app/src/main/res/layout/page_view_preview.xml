@@ -4,19 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.ads.nativetemplates.TemplateView
-        android:id="@+id/app_nativeads_ngan"
+    <RelativeLayout
+        android:id="@+id/layout_nativeads"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="invisible"
-        app:gnt_template_type="@layout/gnt_medium_template_view_button_top" />
+        android:layout_marginBottom="10dp">
+
+        <com.google.android.ads.nativetemplates.TemplateView
+            android:id="@+id/app_nativeads_ngan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:gnt_size_min="true"
+            app:gnt_template_type="@layout/gnt_medium_template_view" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/layout_middle_group"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_above="@+id/app_nativeads_ngan"
+        android:layout_above="@+id/layout_nativeads"
         android:gravity="center_vertical"
         android:paddingHorizontal="20dp">
 
@@ -33,13 +42,13 @@
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/bg_button_fake_ads"
+            android:background="@drawable/bg_button_app"
             android:clickable="true"
             android:ellipsize="end"
             android:focusable="true"
             android:gravity="center"
             android:text="@string/onboarding_continue"
-            android:textColor="@color/button_native"
+            android:textColor="@color/white"
             android:textSize="14sp"
             android:textStyle="bold" />
 

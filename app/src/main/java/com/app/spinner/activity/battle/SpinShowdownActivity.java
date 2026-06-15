@@ -73,8 +73,10 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
     protected void onResume() {
         super.onResume();
         showBannerCollapActivity();
-        if (RemoteConfig.remote_show_native_som_on_list) {
+        if (RemoteConfig.remote_max_native_ads >= 4) {
             showNativeAdsActivity();
+        } else {
+            binding.imageBgNativeads.setVisibility(View.VISIBLE);
         }
     }
 
@@ -115,7 +117,7 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
                         updateProgress(speedYou, speedP2);
                         if (Utils.timeNow() - timeVaCham >= 5000) {
                             timeVaCham = Utils.timeNow();
-                            if (RemoteConfig.remote_show_native_som_on_list) {
+                            if (RemoteConfig.remote_max_native_ads >= 4) {
                                 showNativeAdsActivity();
                             }
                         }
@@ -139,7 +141,9 @@ public class SpinShowdownActivity extends BaseAdsPopupActivity {
 
                 @Override
                 public void onBanPhaoHoa() {
-                    showNativeAdsActivity();
+                    if (RemoteConfig.remote_max_native_ads >= 4) {
+                        showNativeAdsActivity();
+                    }
                 }
 
                 @Override
